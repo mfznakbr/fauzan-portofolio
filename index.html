@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Fauzani Akbar — Supply Chain Operations × Data Analytics &amp; ML</title>
+<meta name="description" content="Portfolio of Muhammad Fauzani Akbar — Supply Chain Operations Analyst with Data Analytics &amp; Machine Learning capability.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --navy-950:#060f1a;
+  --navy-900:#0a1830;
+  --navy-800:#122448;
+  --navy-700:#1d3766;
+  --navy-line: rgba(243,239,227,0.14);
+
+  --amber-500:#f2a93b;
+  --amber-400:#f6bc63;
+  --amber-300:#ffd694;
+
+  --teal-400:#33c2b3;
+  --teal-300:#7fe3d6;
+
+  --paper:#f4f0e4;
+  --paper-dim:#e9e2cf;
+  --paper-line: rgba(13,17,23,0.12);
+
+  --ink:#0d1117;
+  --ink-soft:#4a5164;
+  --ink-faint:#7a8092;
+
+  --font-display:'Big Shoulders Display', sans-serif;
+  --font-body:'IBM Plex Sans', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+
+  --container: 1120px;
+  --edge: 6vw;
+
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2.25rem; --s5:3.5rem; --s6:5rem; --s7:7rem;
+  --ease: cubic-bezier(.16,.84,.44,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+ul{margin:0;padding:0;list-style:none;}
+h1,h2,h3,h4,p{margin:0;}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+::selection{background:var(--amber-500);color:var(--navy-950);}
+section{scroll-margin-top:76px;}
+
+.container{max-width:var(--container);margin:0 auto;padding-left:var(--edge);padding-right:var(--edge);}
+
+.eyebrow{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+  display:flex; align-items:center; gap:.6em;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor;opacity:.55;display:inline-block;}
+
+.h-display{font-family:var(--font-display);font-weight:800;letter-spacing:-0.01em;line-height:.96;text-transform:uppercase;}
+
+.tag-row{display:flex;flex-wrap:wrap;gap:.5rem;}
+.tag{
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.02em;
+  padding:.4em .8em; border:1px solid currentColor; border-radius:999px; opacity:.85; white-space:nowrap;
+}
+
+.btn{
+  font-family:var(--font-mono); font-size:.8rem; letter-spacing:.04em; text-transform:uppercase;
+  padding:.95em 1.6em; border-radius:2px; display:inline-flex; align-items:center; gap:.6em;
+  transition:transform .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.btn svg{width:14px;height:14px;transition:transform .3s var(--ease);}
+.btn:hover svg{transform:translate(3px,-3px);}
+.btn--solid{background:var(--amber-500);color:var(--navy-950);}
+.btn--solid:hover{background:var(--amber-400);transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(242,169,59,.55);}
+.btn--ghost{border:1px solid var(--navy-line);color:var(--paper);}
+.btn--ghost:hover{border-color:var(--amber-500);color:var(--amber-300);transform:translateY(-2px);}
+
+/* ---- placeholder media block ---- */
+.placeholder{
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:.6rem;
+  text-align:center; border:1.5px dashed var(--paper-line); border-radius:6px;
+  background:repeating-linear-gradient(135deg, rgba(13,17,23,0.035) 0 2px, transparent 2px 14px);
+  color:var(--ink-faint); padding:1.2rem; width:100%; height:100%;
+}
+.placeholder__icon{width:26px;height:26px;opacity:.55;}
+.placeholder__label{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.03em;line-height:1.5;text-transform:uppercase;max-width:24ch;}
+.placeholder--dark{border-color:var(--navy-line);color:rgba(243,239,227,.5);background:repeating-linear-gradient(135deg, rgba(243,239,227,0.035) 0 2px, transparent 2px 14px);}
+
+figure.media{margin:0;display:flex;flex-direction:column;gap:.5rem;}
+figure.media .frame{aspect-ratio:4/3;}
+figcaption{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-faint);letter-spacing:.01em;}
+figcaption b{color:var(--ink-soft);font-weight:600;}
+.media--dark figcaption{color:rgba(243,239,227,.55);}
+.media--dark figcaption b{color:var(--paper);}
+
+/* ---- reveal-on-scroll ---- */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease);}
+.reveal.is-visible{opacity:1; transform:none;}
+.reveal-stagger > *{transition-delay:calc(var(--i,0) * 100ms);}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+  .reveal{opacity:1 !important; transform:none !important;}
+}
+
+/* ============================== NAV ============================== */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.1rem var(--edge);
+  background:rgba(6,15,26,.75);
+  backdrop-filter:blur(10px) saturate(140%);
+  border-bottom:1px solid transparent;
+  transition:border-color .4s var(--ease), padding .4s var(--ease);
+}
+.nav.is-scrolled{border-bottom-color:var(--navy-line);padding-top:.75rem;padding-bottom:.75rem;}
+.nav__mark{font-family:var(--font-display);font-weight:800;font-size:1.3rem;color:var(--paper);display:flex;align-items:center;gap:.5rem;}
+.nav__mark span{width:30px;height:30px;background:var(--amber-500);color:var(--navy-950);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.82rem;}
+.nav__links{display:flex;align-items:center;gap:var(--s4);}
+.nav__link{
+  font-family:var(--font-mono); font-size:.74rem; letter-spacing:.06em; text-transform:uppercase;
+  color:rgba(243,239,227,.62); position:relative; padding:.3em 0; transition:color .3s var(--ease);
+}
+.nav__link::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:1px;background:var(--amber-500);transition:right .35s var(--ease);}
+.nav__link:hover,.nav__link.is-active{color:var(--paper);}
+.nav__link:hover::after,.nav__link.is-active::after{right:0;}
+.nav__cta{border:1px solid var(--navy-line);color:var(--paper);font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;padding:.55em 1.1em;border-radius:2px;transition:all .3s var(--ease);}
+.nav__cta:hover{border-color:var(--amber-500);color:var(--amber-300);}
+.nav__toggle{display:none;width:26px;height:20px;position:relative;}
+.nav__toggle span{position:absolute;left:0;right:0;height:2px;background:var(--paper);transition:transform .3s var(--ease),opacity .3s var(--ease),top .3s var(--ease);}
+.nav__toggle span:nth-child(1){top:0;} .nav__toggle span:nth-child(2){top:9px;} .nav__toggle span:nth-child(3){top:18px;}
+.nav.is-open .nav__toggle span:nth-child(1){top:9px;transform:rotate(45deg);}
+.nav.is-open .nav__toggle span:nth-child(2){opacity:0;}
+.nav.is-open .nav__toggle span:nth-child(3){top:9px;transform:rotate(-45deg);}
+@media (max-width:900px){
+  .nav__links{position:fixed;inset:64px 0 0 0;height:calc(100vh - 64px);background:var(--navy-950);flex-direction:column;justify-content:center;gap:var(--s4);transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease);}
+  .nav.is-open .nav__links{opacity:1;pointer-events:auto;transform:translateY(0);}
+  .nav__links .nav__link{font-size:1rem;}
+  .nav__toggle{display:block;}
+}
+
+/* ============================== HERO ============================== */
+.hero{
+  position:relative; min-height:92vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden;
+  padding:150px 0 var(--s5);
+  background:
+    radial-gradient(ellipse 70% 55% at 80% 15%, rgba(51,194,179,.14), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 12% 88%, rgba(242,169,59,.09), transparent 60%),
+    linear-gradient(160deg, var(--navy-950), var(--navy-900) 60%, var(--navy-950));
+  color:var(--paper);
+}
+.hero__inner{position:relative;z-index:2;display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s5);align-items:center;}
+.hero__eyebrow{color:var(--teal-300);margin-bottom:var(--s3);}
+.hero__title{font-size:clamp(2.6rem,6.5vw,5.4rem);}
+.hero__title em{font-style:normal;color:var(--amber-400);}
+.hero__pillars{display:flex;align-items:center;flex-wrap:wrap;gap:.8rem;margin-top:var(--s3);font-family:var(--font-mono);font-size:.92rem;}
+.hero__pillar{padding:.5em 1em;border:1px solid var(--navy-line);border-radius:999px;color:var(--paper);}
+.hero__pillar--accent{border-color:var(--amber-500);color:var(--amber-300);}
+.hero__cross{color:var(--ink-faint);opacity:.6;}
+.hero__lede{max-width:46ch;margin-top:var(--s4);font-size:1.06rem;color:rgba(243,239,227,.72);}
+.hero__cta{display:flex;gap:1rem;margin-top:var(--s5);flex-wrap:wrap;}
+
+.hero__visual{display:flex;flex-direction:column;align-items:center;gap:var(--s3);}
+.hero__frame{width:min(280px,80%);aspect-ratio:4/5;border:1px solid var(--navy-line);border-radius:10px;overflow:hidden;}
+.hero__stats{display:flex;flex-direction:column;gap:.5rem;width:min(280px,80%);}
+.hero__stat{display:flex;justify-content:space-between;gap:1rem;font-family:var(--font-mono);font-size:.74rem;border-top:1px solid var(--navy-line);padding:.55rem 0;}
+.hero__stat b{color:var(--amber-400);font-weight:600;}
+
+.hero__scroll{position:relative;z-index:2;margin:var(--s6) auto 0;display:flex;flex-direction:column;align-items:center;gap:.6rem;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:rgba(243,239,227,.45);}
+.hero__scroll-line{width:1px;height:32px;background:linear-gradient(var(--amber-500),transparent);animation:pulse-scroll 1.8s ease-in-out infinite;}
+@keyframes pulse-scroll{0%,100%{transform:scaleY(1);opacity:.4;}50%{transform:scaleY(1.4);opacity:1;}}
+
+@media (max-width:980px){.hero__inner{grid-template-columns:1fr;}.hero__visual{order:-1;margin-bottom:var(--s3);}}
+
+/* ============================== SECTION SHELL ============================== */
+.eyebrow--dark{color:#9a6b1f;}
+.section-head{max-width:56ch;margin-bottom:var(--s5);}
+.section-head h2{font-size:clamp(2rem,4vw,3rem);margin-top:var(--s2);}
+
+/* ============================== ABOUT ============================== */
+.about{padding:var(--s7) 0 var(--s6);background:var(--paper);}
+.about__top{display:grid;grid-template-columns:.85fr 1.15fr;gap:var(--s5);align-items:start;}
+.about__heading{font-size:clamp(2.1rem,4vw,3.1rem);margin-top:var(--s2);}
+.about__body{color:var(--ink-soft);}
+.about__body p{margin-bottom:1.1em;font-size:1.05rem;}
+.about__body p:last-child{margin-bottom:0;}
+
+.stats{margin-top:var(--s6);display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--paper-line);border-left:1px solid var(--paper-line);}
+.stat{border-right:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);padding:var(--s3);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;gap:.5rem;}
+.stat__value{font-family:var(--font-mono);font-size:2rem;font-weight:600;color:var(--ink);letter-spacing:-.01em;}
+.stat__label{font-size:.8rem;color:var(--ink-faint);line-height:1.4;max-width:22ch;}
+.stat__source{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-400);}
+@media (max-width:980px){.about__top{grid-template-columns:1fr;}.stats{grid-template-columns:repeat(2,1fr);}}
+
+/* ============================== EXPERIENCE ============================== */
+.experience{padding:var(--s6) 0;background:var(--navy-950);color:var(--paper);}
+.experience .section-head .eyebrow{color:var(--teal-300);}
+.xp-list{display:flex;flex-direction:column;}
+.xp{padding:var(--s4) 0;border-top:1px solid var(--navy-line);display:grid;grid-template-columns:.32fr .68fr;gap:var(--s4);}
+.xp:last-child{border-bottom:1px solid var(--navy-line);}
+.xp__when{font-family:var(--font-mono);font-size:.78rem;color:var(--paper-dim);opacity:.7;}
+.xp__role{font-family:var(--font-display);font-size:1.35rem;font-weight:700;text-transform:uppercase;}
+.xp__org{font-family:var(--font-mono);font-size:.82rem;color:var(--teal-300);margin-top:.3rem;}
+.xp__body{color:rgba(243,239,227,.72);font-size:.95rem;margin-top:.8rem;}
+.xp__body ul{margin-top:.4rem;}
+.xp__body li{padding-left:1.1em;position:relative;margin-bottom:.35em;}
+.xp__body li::before{content:"—";position:absolute;left:0;opacity:.5;}
+.xp__highlight{margin-top:.9rem;padding:.9rem 1rem;border-left:3px solid var(--amber-500);background:rgba(242,169,59,.06);font-size:.92rem;color:var(--paper);}
+@media (max-width:760px){.xp{grid-template-columns:1fr;gap:.6rem;}}
+
+/* ============================== SKILLS ============================== */
+.skills{background:var(--paper-dim);color:var(--ink);padding:var(--s6) 0;}
+.skills .section-head .eyebrow{color:#9a6b1f;}
+.skills__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);}
+.manifest{border:1px solid var(--paper-line);padding:var(--s3);background:var(--paper);transition:border-color .3s var(--ease), transform .3s var(--ease);}
+.manifest:hover{border-color:var(--amber-500);transform:translateY(-3px);}
+.manifest__id{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#9a6b1f;margin-bottom:.9rem;display:block;}
+.manifest .tag-row .tag{color:var(--ink);border-color:var(--paper-line);transition:border-color .3s var(--ease), color .3s var(--ease);}
+.manifest .tag-row .tag:hover{border-color:#9a6b1f;color:#9a6b1f;}
+@media (max-width:860px){.skills__grid{grid-template-columns:1fr;}}
+
+/* ============================== PROJECTS ============================== */
+.work-intro{padding:var(--s7) 0 var(--s5);background:var(--paper);text-align:center;}
+.work-intro .eyebrow{justify-content:center;color:#9a6b1f;}
+.work-intro .eyebrow::before{display:none;}
+.work-intro h2{font-size:clamp(2.1rem,5vw,3.4rem);margin-top:var(--s2);max-width:20ch;margin-inline:auto;}
+
+.project{padding:var(--s6) 0;}
+.project--light{background:var(--paper);color:var(--ink);}
+.project--dark{background:var(--navy-950);color:var(--paper);}
+.project__inner{display:grid;grid-template-columns:.58fr .42fr;gap:var(--s5);align-items:start;}
+
+.project__kicker{margin-bottom:var(--s2);}
+.project--light .project__kicker .eyebrow{color:#9a6b1f;}
+.project--dark .project__kicker .eyebrow{color:var(--teal-300);}
+.project__title{font-size:clamp(1.8rem,3.2vw,2.5rem);margin-bottom:var(--s3);max-width:17ch;}
+
+.project__block-label{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;opacity:.55;margin:1.3em 0 .5em;}
+.project__block-label:first-of-type{margin-top:0;}
+.project__text{font-size:1rem;}
+.project--light .project__text{color:var(--ink-soft);}
+.project--dark .project__text{color:rgba(243,239,227,.72);}
+
+.metric{margin:var(--s4) 0;display:inline-flex;align-items:baseline;gap:.7rem;border-left:3px solid var(--amber-500);padding-left:1rem;}
+.metric__value{font-family:var(--font-mono);font-weight:600;font-size:2.2rem;line-height:1;}
+.metric__label{font-size:.8rem;max-width:26ch;opacity:.75;}
+.metric-row{display:flex;flex-wrap:wrap;gap:var(--s4);}
+
+.status-line{font-family:var(--font-mono);font-size:.78rem;padding:.85rem 1rem;border:1px dashed currentColor;opacity:.85;margin:var(--s3) 0;}
+.status-line b{font-weight:600;}
+
+.stepper{display:flex;flex-wrap:wrap;gap:0;margin:var(--s3) 0 var(--s4);}
+.stepper__item{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.03em;text-transform:uppercase;padding:.5em .9em;border:1px solid currentColor;opacity:.4;}
+.stepper__item + .stepper__item{border-left:none;}
+.stepper__item.is-done{opacity:1;}
+.stepper__item.is-done::before{content:"✓ ";color:var(--teal-400);}
+.stepper__item.is-next{opacity:.85;color:var(--amber-500);border-style:dashed;}
+
+.project__media{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);align-self:start;}
+.project__tags{margin-top:var(--s4);}
+
+@media (max-width:980px){
+  .project__inner{grid-template-columns:1fr;}
+  .project__media{order:-1;}
+}
+@media (max-width:560px){.project__media{grid-template-columns:1fr;}}
+
+/* ============================== CERTIFICATIONS ============================== */
+.certs{padding:var(--s7) 0;background:var(--paper);}
+.certs .section-head .eyebrow{color:#9a6b1f;}
+.certs__grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(260px,1fr));gap:var(--s3);}
+.cert{background:var(--paper-dim);border:1px solid var(--paper-line);padding:var(--s3);display:flex;flex-direction:column;gap:var(--s2);transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
+.cert:hover{transform:translateY(-6px);box-shadow:0 18px 34px -18px rgba(13,17,23,.25);}
+.cert__badge{width:100%;aspect-ratio:1/.72;display:flex;align-items:center;justify-content:center;border:1.5px dashed var(--paper-line);border-radius:4px;color:var(--ink-faint);font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.03em;text-align:center;padding:.8rem;background:repeating-linear-gradient(135deg, rgba(13,17,23,0.035) 0 2px, transparent 2px 14px);}
+.cert__title{font-family:var(--font-body);font-weight:600;font-size:.96rem;line-height:1.3;}
+.cert__meta{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-faint);line-height:1.6;}
+.cert__meta span{color:var(--ink-soft);}
+
+/* ============================== CONTACT ============================== */
+.contact{background:var(--navy-950);color:var(--paper);padding:var(--s7) 0 var(--s6);text-align:center;}
+.contact .eyebrow{justify-content:center;color:var(--teal-300);margin-bottom:var(--s3);}
+.contact .eyebrow::before{display:none;}
+.contact h2{font-size:clamp(2.2rem,5.5vw,4rem);max-width:16ch;margin-inline:auto;}
+.contact__lede{max-width:48ch;margin:var(--s3) auto 0;color:rgba(243,239,227,.68);}
+.contact__row{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:var(--s5);}
+.contact__links{margin-top:var(--s6);display:flex;justify-content:center;gap:var(--s4);flex-wrap:wrap;font-family:var(--font-mono);font-size:.85rem;}
+.contact__links a{border-bottom:1px solid var(--navy-line);padding-bottom:.2em;transition:border-color .3s var(--ease),color .3s var(--ease);}
+.contact__links a:hover{border-color:var(--amber-500);color:var(--amber-300);}
+
+/* ============================== FOOTER ============================== */
+.footer{background:var(--navy-950);color:rgba(243,239,227,.45);padding:var(--s3) 0 var(--s4);border-top:1px solid var(--navy-line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:var(--font-mono);font-size:.7rem;}
+
+@media (max-width:640px){
+  :root{--edge:6.5vw;}
+  .hero{padding-top:120px;}
+  .stats{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="siteNav">
+  <a href="#top" class="nav__mark"><span>M</span>Fauzani Akbar</a>
+  <ul class="nav__links" id="navLinks">
+    <li><a class="nav__link" data-nav href="#about">About</a></li>
+    <li><a class="nav__link" data-nav href="#experience">Experience</a></li>
+    <li><a class="nav__link" data-nav href="#skills">Skills</a></li>
+    <li><a class="nav__link" data-nav href="#work">Work</a></li>
+    <li><a class="nav__link" data-nav href="#certifications">Certifications</a></li>
+    <li><a class="nav__link" data-nav href="#contact">Contact</a></li>
+    <li><a class="nav__cta" href="#" download>Download CV ↓</a></li>
+  </ul>
+  <button class="nav__toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ============================== HERO ============================== -->
+<header class="hero" id="top">
+  <div class="container hero__inner">
+    <div class="hero__copy reveal">
+      <p class="eyebrow hero__eyebrow">Port operations → data &amp; ml</p>
+      <h1 class="h-display hero__title">Muhammad<br>Fauzani <em>Akbar</em></h1>
+      <div class="hero__pillars">
+        <span class="hero__pillar">Supply Chain Operations Analyst</span>
+        <span class="hero__cross">×</span>
+        <span class="hero__pillar hero__pillar--accent">Data Analytics &amp; Machine Learning</span>
+      </div>
+      <p class="hero__lede">Reads a container yard the way most people read a spreadsheet — dwelling time, throughput, occupancy — then builds the regression and ML models that explain why the numbers move.</p>
+      <div class="hero__cta">
+        <a href="#work" class="btn btn--solid">View case studies <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+        <a href="#contact" class="btn btn--ghost">Get in touch <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+      </div>
+    </div>
+    <div class="hero__visual reveal">
+      <div class="hero__frame">
+        <div class="placeholder placeholder--dark">
+          <svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="2"/><path d="m3 16 5-5 4 4 4-5 5 6"/></svg>
+          <span class="placeholder__label">UPLOAD: Profile photo — Muhammad Fauzani Akbar</span>
+        </div>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat"><span>YOR model, R²</span><b>84.35%</b></div>
+        <div class="hero__stat"><span>Avg. terminal round trip</span><b>107 min</b></div>
+        <div class="hero__stat"><span>CPPI Belawan, global rank</span><b>#244</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__scroll"><span>SCROLL</span><span class="hero__scroll-line"></span></div>
+</header>
+
+<!-- ============================== ABOUT ============================== -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about__top">
+      <div class="reveal">
+        <p class="eyebrow eyebrow--dark">About</p>
+        <h2 class="h-display about__heading">From the yard floor<br>to the regression table.</h2>
+      </div>
+      <div class="about__body reveal">
+        <p>Muhammad Fauzani Akbar studies port operations from the ground up — measuring dwelling time, throughput, and yard occupancy at Pelabuhan Belawan — then builds the statistical and machine learning models that explain why those numbers move the way they do.</p>
+        <p>A recent graduate of the D4 Administrasi Niaga (Business Administration) program at Politeknik Negeri Medan, he works both pillars at once: an operator who reads a terminal like a dataset, and an analyst who never loses sight of what a KPI actually feels like on the yard floor.</p>
+      </div>
+    </div>
+    <div class="stats reveal-stagger">
+      <div class="stat reveal" style="--i:0">
+        <div class="stat__value"><span data-counter data-target="84.35" data-decimals="2" data-suffix="%">84.35%</span></div>
+        <div class="stat__label">R² — Yard Occupancy Ratio explained by dwelling time &amp; throughput</div>
+        <div class="stat__source">Undergrad thesis</div>
+      </div>
+      <div class="stat reveal" style="--i:1">
+        <div class="stat__value"><span data-counter data-target="107" data-suffix=" min">107 min</span></div>
+        <div class="stat__label">Avg. terminal round trip time — 2.4× the 45-min KPI</div>
+        <div class="stat__source">Efficiency diagnostic</div>
+      </div>
+      <div class="stat reveal" style="--i:2">
+        <div class="stat__value">#<span data-counter data-target="244">244</span></div>
+        <div class="stat__label">Global CPPI rank for Pelabuhan Belawan</div>
+        <div class="stat__source">Efficiency diagnostic</div>
+      </div>
+      <div class="stat reveal" style="--i:3">
+        <div class="stat__value">07-ICWET-035</div>
+        <div class="stat__label">Accepted after major revisions — ICWET 2026</div>
+        <div class="stat__source">Conference paper</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== EXPERIENCE ============================== -->
+<section class="experience" id="experience">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Experience</p>
+      <h2 class="h-display" style="font-size:clamp(2rem,4vw,3rem)">Two internships, one thread.</h2>
+    </div>
+    <div class="xp-list reveal-stagger">
+      <div class="xp reveal" style="--i:0">
+        <div class="xp__when">[ADD: DATES]</div>
+        <div>
+          <div class="xp__role">Intern — Container &amp; Cargo Services</div>
+          <div class="xp__org">PT Pelindo Regional 1, Belawan</div>
+          <div class="xp__body">
+            <p>Role secured independently through LinkedIn outreach.</p>
+            <ul>
+              <li>Attended operational meetings and handled administrative processes through Pelindo's internal e-office system</li>
+            </ul>
+            <div class="xp__highlight"><b>Self-initiated project:</b> analyzed 1,737 truck transaction records, built a Power BI dashboard from the findings, and presented it to DPR RI (the Indonesian House of Representatives).</div>
+          </div>
+        </div>
+      </div>
+      <div class="xp reveal" style="--i:1">
+        <div class="xp__when">[ADD: DATES]</div>
+        <div>
+          <div class="xp__role">Intern — Data &amp; ML</div>
+          <div class="xp__org">PTPN I Regional I, Helvetia, North Sumatra</div>
+          <div class="xp__body">
+            <p>Built a machine learning model to predict harvest yield using Python and MLflow — the same case study site later became the basis for the ICWET 2026 conference paper below.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SKILLS ============================== -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow eyebrow--dark">Skills</p>
+      <h2 class="h-display" style="font-size:clamp(2rem,4vw,3rem)">Toolkit, manifested.</h2>
+    </div>
+    <div class="skills__grid reveal-stagger">
+      <div class="manifest reveal" style="--i:0">
+        <span class="manifest__id">Manifest 01 — Data &amp; ML</span>
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Scikit-learn</span>
+          <span class="tag">TensorFlow</span><span class="tag">MLflow</span><span class="tag">Streamlit</span>
+          <span class="tag">SQL</span><span class="tag">PostgreSQL</span>
+        </div>
+      </div>
+      <div class="manifest reveal" style="--i:1">
+        <span class="manifest__id">Manifest 02 — Visualization</span>
+        <div class="tag-row"><span class="tag">Power BI</span><span class="tag">Tableau</span></div>
+      </div>
+      <div class="manifest reveal" style="--i:2">
+        <span class="manifest__id">Manifest 03 — Analysis</span>
+        <div class="tag-row"><span class="tag">Excel</span><span class="tag">SPSS</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== PROJECTS ============================== -->
+<section id="work">
+<div class="work-intro">
+  <div class="container reveal">
+    <p class="eyebrow">Featured work</p>
+    <h2 class="h-display">Four ways to make a terminal make sense.</h2>
+  </div>
+</div>
+
+<!-- Project 1 — YOR Thesis -->
+<article class="project project--light">
+  <div class="container project__inner">
+    <div class="project__body reveal">
+      <div class="project__kicker"><p class="eyebrow">Undergraduate thesis · 2026</p></div>
+      <h3 class="h-display project__title">Modeling Yard Occupancy at Pelabuhan Belawan</h3>
+      <p class="project__block-label">Problem</p>
+      <p class="project__text">Pelabuhan Belawan needed a clearer read on what actually drives Yard Occupancy Ratio (YOR) — the KPI that signals when a container yard is running out of room.</p>
+      <p class="project__block-label">Approach</p>
+      <p class="project__text">Built a multiple regression model with Dwelling Time Ekspor and Throughput TEUs as predictors of YOR, run in SPSS. The dataset was limited to 15 months of data captured after Autogate 3 went live (n = 15) — deliberately excluding the pre-Autogate period so the model wouldn't mix two different operational regimes into one structural break. Power BI dashboards were built to present the findings at the thesis defense.</p>
+      <div class="metric">
+        <div class="metric__value">84.35%</div>
+        <div class="metric__label">R² — variance in YOR explained by Dwelling Time &amp; Throughput</div>
+      </div>
+      <div class="status-line">Sidang complete — <b>graduated</b>. Now being developed into a research funding proposal (proposal pendanaan penelitian) on the same variables.</div>
+      <div class="project__tags tag-row"><span class="tag">SPSS</span><span class="tag">Power BI</span><span class="tag">Multiple Regression</span><span class="tag">n = 15, post-Autogate 3</span></div>
+    </div>
+    <div class="project__media reveal">
+      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Power BI dashboard — YOR model</span></div></div><figcaption><b>Fig. 1</b> — YOR dashboard</figcaption></figure>
+      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">UPLOAD: Sidang / thesis defense photo</span></div></div><figcaption><b>Fig. 2</b> — Thesis defense</figcaption></figure>
+    </div>
+  </div>
+</article>
+
+<!-- Project 2 — ICWET 2026 -->
+<article class="project project--dark">
+  <div class="container project__inner">
+    <div class="project__body reveal">
+      <div class="project__kicker"><p class="eyebrow">Conference paper · ICWET 2026</p></div>
+      <h3 class="h-display project__title">Predicting Sugarcane Yield with Random Forest</h3>
+      <p class="project__block-label">Problem</p>
+      <p class="project__text">PT Perkebunan Nusantara I Regional I, Helvetia, North Sumatra, needed a reliable way to forecast sugarcane yield ahead of harvest to plan processing capacity and logistics.</p>
+      <p class="project__block-label">Approach</p>
+      <p class="project__text">Chose a Random Forest model over simpler linear approaches because the agronomic relationships involved are non-linear and the field records are noisy — Random Forest handles both without heavy preprocessing or feature scaling. Built a live Streamlit demo of the model for the conference talk.</p>
+      <div class="metric-row">
+        <div class="metric"><div class="metric__value" style="font-size:1.6rem">07-ICWET-035</div><div class="metric__label">Paper ID — accepted after major revisions</div></div>
+      </div>
+      <div class="status-line">Presenting Aug 12–13, 2026 · hybrid · Sabah International Convention Centre — with a ~2–3 min live Streamlit demo built into the 10-minute talk. Co-authored with Harris Pinagaran Nasution (first author) and Dr. Erwinsyah Simanungkalit.</div>
+      <div class="project__tags tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Random Forest</span><span class="tag">Streamlit</span></div>
+    </div>
+    <div class="project__media reveal">
+      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></div><figcaption><b>Fig. 1</b> — Live Streamlit demo</figcaption></figure>
+      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></div><figcaption><b>Fig. 2</b> — Feature importances</figcaption></figure>
+    </div>
+  </div>
+</article>
+
+<!-- Project 3 — Efficiency diagnostic -->
+<article class="project project--light">
+  <div class="container project__inner">
+    <div class="project__body reveal">
+      <div class="project__kicker"><p class="eyebrow">Strategy diagnostic</p></div>
+      <h3 class="h-display project__title">Why Belawan's Terminal Round Trip Runs 2.4× KPI</h3>
+      <p class="project__block-label">Problem</p>
+      <p class="project__text">Pelabuhan Belawan's average Terminal Round Trip Time (TRT GO) was running far above the operational KPI, and the port sat at a weak #244 in the global CPPI ranking. The initial assumption was a single broken process — that turned out to be wrong.</p>
+      <p class="project__block-label">Approach</p>
+      <p class="project__text">Applied Rumelt's Kernel framework, which forces a real diagnosis stage before jumping to a fix — useful here, since it surfaced a different root cause than expected: a fragmented data layer (TOS Nusantara, TBS, and PTOS-M running unintegrated) rather than one single process failure.</p>
+      <div class="metric-row">
+        <div class="metric"><div class="metric__value">107 min</div><div class="metric__label">avg. TRT GO vs. a 45-min KPI (2.4×)</div></div>
+        <div class="metric"><div class="metric__value">#244</div><div class="metric__label">global CPPI rank</div></div>
+      </div>
+      <p class="project__block-label">Progress</p>
+      <div class="stepper">
+        <span class="stepper__item is-done">Current condition</span>
+        <span class="stepper__item is-done">SOP review</span>
+        <span class="stepper__item is-done">Benchmarking</span>
+        <span class="stepper__item is-done">Diagnosis</span>
+        <span class="stepper__item is-next">Guiding policy</span>
+      </div>
+      <div class="project__tags tag-row"><span class="tag">Rumelt's Kernel Framework</span><span class="tag">CPPI Benchmarking</span><span class="tag">SOP Analysis</span></div>
+    </div>
+    <div class="project__media reveal">
+      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h16M6 15l3-4 3 2 4-6 3 4"/></svg><span class="placeholder__label">UPLOAD: TRT benchmarking chart</span></div></div><figcaption><b>Fig. 1</b> — TRT vs. KPI</figcaption></figure>
+      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 9h8M8 13h5"/></svg><span class="placeholder__label">UPLOAD: SOP process flow diagram</span></div></div><figcaption><b>Fig. 2</b> — SOP process flow</figcaption></figure>
+    </div>
+  </div>
+</article>
+
+<!-- Project 4 — Six Sigma capstone -->
+<article class="project project--dark">
+  <div class="container project__inner">
+    <div class="project__body reveal">
+      <div class="project__kicker"><p class="eyebrow">Certification capstone</p></div>
+      <h3 class="h-display project__title">Rebuilding a DMAIC Capstone in Python</h3>
+      <p class="project__block-label">Problem</p>
+      <p class="project__text">Wanted to apply real Six Sigma DMAIC rigor to an improvement problem — without touching confidential internal Pelindo work data.</p>
+      <p class="project__block-label">Approach</p>
+      <p class="project__text">Completed LinkedIn Learning's "Six Sigma: Green Belt" course with Richard Chua, then built a capstone DMAIC project on public data instead. Control charts and hypothesis testing were redone in Python rather than Minitab — for reproducibility, and so the workflow plugs into the same stack as the rest of his analytics work.</p>
+      <div class="metric"><div class="metric__value" style="font-size:1.7rem">5 phases</div><div class="metric__label">Define · Measure · Analyze · Improve · Control — rebuilt end-to-end in Python</div></div>
+      <div class="project__tags tag-row"><span class="tag">Six Sigma DMAIC</span><span class="tag">Python</span><span class="tag">Control Charts</span><span class="tag">Hypothesis Testing</span></div>
+    </div>
+    <div class="project__media reveal">
+      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></div><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>
+      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></div><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>
+    </div>
+  </div>
+</article>
+</section>
+
+<!-- ============================== CERTIFICATIONS ============================== -->
+<section class="certs" id="certifications">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="eyebrow">Certifications</p>
+      <h2 class="h-display" style="font-size:clamp(2rem,4vw,3rem)">Credentials, filed and stamped.</h2>
+    </div>
+    <div class="certs__grid reveal-stagger">
+      <div class="cert reveal" style="--i:0"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Supply Chain Management Foundations</div><div class="cert__meta">Instructor: <span>Daniel Stanton</span><br>Issuer: [add issuer] · Date: [add date]</div></div>
+      <div class="cert reveal" style="--i:1"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Project Management Foundations</div><div class="cert__meta">Instructor: <span>Daniel Stanton</span><br>Issuer: [add issuer] · Date: [add date]</div></div>
+      <div class="cert reveal" style="--i:2"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Applied Machine Learning</div><div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: [add date]</div></div>
+      <div class="cert reveal" style="--i:3"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Machine Learning Systems</div><div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: [add date]</div></div>
+      <div class="cert reveal" style="--i:4"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">MLOps</div><div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: [add date]</div></div>
+      <div class="cert reveal" style="--i:5"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">SAP Analytics Cloud &amp; SAP Build Apps</div><div class="cert__meta">Issuer: <span>ASEAN Data Science Explorers 2024</span> (SAP &amp; ASEAN Foundation)<br>Score: 100 · Date: [add date]</div></div>
+      <div class="cert reveal" style="--i:6"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Six Sigma: Green Belt</div><div class="cert__meta">Instructor: <span>Richard Chua</span><br>Issuer: LinkedIn Learning · Date: [add date]</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================== -->
+<section class="contact" id="contact">
+  <div class="container reveal">
+    <p class="eyebrow">Get in touch</p>
+    <h2 class="h-display">Ready to put these two pillars to work.</h2>
+    <p class="contact__lede">Open to Supply Chain Analyst and Data Analyst roles — happy to walk through any of the case studies above in more depth.</p>
+    <div class="contact__row">
+      <a href="#" class="btn btn--solid">Download CV <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg></a>
+      <a href="mailto:#" class="btn btn--ghost">Email me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+    </div>
+    <div class="contact__links">
+      <a href="#">[add email]</a>
+      <a href="#">linkedin.com/in/[add-handle]</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>© 2026 Muhammad Fauzani Akbar</span>
+  <span>Politeknik Negeri Medan · Administrasi Niaga</span>
+</footer>
+
+<script>
+(function(){
+  var nav = document.getElementById('siteNav');
+  var toggle = document.getElementById('navToggle');
+  window.addEventListener('scroll', function(){
+    nav.classList.toggle('is-scrolled', window.scrollY > 20);
+  }, {passive:true});
+  toggle.addEventListener('click', function(){ nav.classList.toggle('is-open'); });
+  document.querySelectorAll('[data-nav]').forEach(function(a){
+    a.addEventListener('click', function(){ nav.classList.remove('is-open'); });
+  });
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+  var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  var navObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var id = '#' + entry.target.id;
+      var link = navLinks.find(function(a){ return a.getAttribute('href') === id; });
+      if(!link) return;
+      if(entry.isIntersecting){
+        navLinks.forEach(function(l){ l.classList.remove('is-active'); });
+        link.classList.add('is-active');
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  sections.forEach(function(s){ navObserver.observe(s); });
+
+  /* reveal on scroll */
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+
+  /* number counters */
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function animateCounter(el){
+    var target = parseFloat(el.getAttribute('data-target'));
+    var decimals = parseInt(el.getAttribute('data-decimals') || '0', 10);
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(reduceMotion){ el.textContent = target.toFixed(decimals) + suffix; return; }
+    var start = 0, duration = 1300, startTime = null;
+    function step(ts){
+      if(!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var val = start + (target - start) * eased;
+      el.textContent = val.toFixed(decimals) + suffix;
+      if(progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var counterObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('[data-counter]').forEach(function(el){ counterObserver.observe(el); });
+})();
+</script>
+</body>
+</html>
