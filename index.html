@@ -104,6 +104,12 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .media--dark figcaption{color:rgba(243,239,227,.55);}
 .media--dark figcaption b{color:var(--paper);}
 
+.frame,.hero__frame{position:relative;overflow:hidden;}
+.frame img,.hero__frame img{display:none;width:100%;height:100%;object-fit:cover;}
+.frame.has-image img,.hero__frame.has-image img{display:block;}
+.frame.has-image .placeholder,.hero__frame.has-image .placeholder{display:none;}
+.frame .placeholder,.hero__frame .placeholder{position:absolute;inset:0;}
+
 /* ---- reveal-on-scroll ---- */
 .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s var(--ease), transform .8s var(--ease);}
 .reveal.is-visible{opacity:1; transform:none;}
@@ -282,10 +288,15 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .certs__grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(260px,1fr));gap:var(--s3);}
 .cert{background:var(--paper-dim);border:1px solid var(--paper-line);padding:var(--s3);display:flex;flex-direction:column;gap:var(--s2);transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
 .cert:hover{transform:translateY(-6px);box-shadow:0 18px 34px -18px rgba(13,17,23,.25);}
-.cert__badge{width:100%;aspect-ratio:1/.72;display:flex;align-items:center;justify-content:center;border:1.5px dashed var(--paper-line);border-radius:4px;color:var(--ink-faint);font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.03em;text-align:center;padding:.8rem;background:repeating-linear-gradient(135deg, rgba(13,17,23,0.035) 0 2px, transparent 2px 14px);}
+.cert__badge{position:relative;width:100%;aspect-ratio:1/.72;display:block;border:1.5px dashed var(--paper-line);border-radius:4px;overflow:hidden;background:repeating-linear-gradient(135deg, rgba(13,17,23,0.035) 0 2px, transparent 2px 14px);}
+.cert__badge img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--ease);}
+.cert:hover .cert__badge img{transform:scale(1.04);}
+.cert__badge-fallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;text-align:center;color:var(--ink-faint);font-family:var(--font-mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.03em;padding:.8rem;line-height:1.5;}
 .cert__title{font-family:var(--font-body);font-weight:600;font-size:.96rem;line-height:1.3;}
 .cert__meta{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-faint);line-height:1.6;}
 .cert__meta span{color:var(--ink-soft);}
+.cert__view{margin-top:auto;padding-top:.5rem;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.03em;color:#9a6b1f;border-bottom:1px solid transparent;align-self:flex-start;transition:border-color .3s var(--ease);}
+.cert__view:hover{border-color:#9a6b1f;}
 
 /* ============================== CONTACT ============================== */
 .contact{background:var(--navy-950);color:var(--paper);padding:var(--s7) 0 var(--s6);text-align:center;}
@@ -343,6 +354,7 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
     </div>
     <div class="hero__visual reveal">
       <div class="hero__frame">
+        <img src="PASTE-PROFILE-PHOTO-LINK-HERE" alt="Muhammad Fauzani Akbar">
         <div class="placeholder placeholder--dark">
           <svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><circle cx="9" cy="9" r="2"/><path d="m3 16 5-5 4 4 4-5 5 6"/></svg>
           <span class="placeholder__label">UPLOAD: Profile photo — Muhammad Fauzani Akbar</span>
@@ -487,8 +499,8 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
       <div class="project__tags tag-row"><span class="tag">SPSS</span><span class="tag">Power BI</span><span class="tag">Multiple Regression</span><span class="tag">n = 15, post-Autogate 3</span></div>
     </div>
     <div class="project__media reveal">
-      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Power BI dashboard — YOR model</span></div></div><figcaption><b>Fig. 1</b> — YOR dashboard</figcaption></figure>
-      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">UPLOAD: Sidang / thesis defense photo</span></div></div><figcaption><b>Fig. 2</b> — Thesis defense</figcaption></figure>
+      <figure class="media"><div class="frame"><img src="PASTE-YOR-DASHBOARD-IMAGE-LINK-HERE" alt="Power BI dashboard — YOR model"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Power BI dashboard — YOR model</span></div></div><figcaption><b>Fig. 1</b> — YOR dashboard</figcaption></figure>
+      <figure class="media"><div class="frame"><img src="PASTE-SIDANG-PHOTO-LINK-HERE" alt="Thesis defense photo"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">UPLOAD: Sidang / thesis defense photo</span></div></div><figcaption><b>Fig. 2</b> — Thesis defense</figcaption></figure>
     </div>
   </div>
 </article>
@@ -510,8 +522,8 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
       <div class="project__tags tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Random Forest</span><span class="tag">Streamlit</span></div>
     </div>
     <div class="project__media reveal">
-      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></div><figcaption><b>Fig. 1</b> — Live Streamlit demo</figcaption></figure>
-      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></div><figcaption><b>Fig. 2</b> — Feature importances</figcaption></figure>
+      <figure class="media media--dark"><div class="frame"><img src="PASTE-STREAMLIT-DEMO-IMAGE-LINK-HERE" alt="Streamlit demo screenshot"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></div><figcaption><b>Fig. 1</b> — Live Streamlit demo</figcaption></figure>
+      <figure class="media media--dark"><div class="frame"><img src="PASTE-FEATURE-IMPORTANCE-CHART-LINK-HERE" alt="Feature importance chart"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></div><figcaption><b>Fig. 2</b> — Feature importances</figcaption></figure>
     </div>
   </div>
 </article>
@@ -541,8 +553,8 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
       <div class="project__tags tag-row"><span class="tag">Rumelt's Kernel Framework</span><span class="tag">CPPI Benchmarking</span><span class="tag">SOP Analysis</span></div>
     </div>
     <div class="project__media reveal">
-      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h16M6 15l3-4 3 2 4-6 3 4"/></svg><span class="placeholder__label">UPLOAD: TRT benchmarking chart</span></div></div><figcaption><b>Fig. 1</b> — TRT vs. KPI</figcaption></figure>
-      <figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 9h8M8 13h5"/></svg><span class="placeholder__label">UPLOAD: SOP process flow diagram</span></div></div><figcaption><b>Fig. 2</b> — SOP process flow</figcaption></figure>
+      <figure class="media"><div class="frame"><img src="PASTE-TRT-CHART-LINK-HERE" alt="TRT benchmarking chart"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h16M6 15l3-4 3 2 4-6 3 4"/></svg><span class="placeholder__label">UPLOAD: TRT benchmarking chart</span></div></div><figcaption><b>Fig. 1</b> — TRT vs. KPI</figcaption></figure>
+      <figure class="media"><div class="frame"><img src="PASTE-SOP-DIAGRAM-LINK-HERE" alt="SOP process flow diagram"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 9h8M8 13h5"/></svg><span class="placeholder__label">UPLOAD: SOP process flow diagram</span></div></div><figcaption><b>Fig. 2</b> — SOP process flow</figcaption></figure>
     </div>
   </div>
 </article>
@@ -561,8 +573,8 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
       <div class="project__tags tag-row"><span class="tag">Six Sigma DMAIC</span><span class="tag">Python</span><span class="tag">Control Charts</span><span class="tag">Hypothesis Testing</span></div>
     </div>
     <div class="project__media reveal">
-      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></div><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>
-      <figure class="media media--dark"><div class="frame"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></div><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>
+      <figure class="media media--dark"><div class="frame"><img src="PASTE-CONTROL-CHART-LINK-HERE" alt="Control chart (Python)"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></div><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>
+      <figure class="media media--dark"><div class="frame"><img src="PASTE-DMAIC-CHARTER-LINK-HERE" alt="DMAIC project charter"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></div><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>
     </div>
   </div>
 </article>
@@ -576,13 +588,48 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
       <h2 class="h-display" style="font-size:clamp(2rem,4vw,3rem)">Credentials, filed and stamped.</h2>
     </div>
     <div class="certs__grid reveal-stagger">
-      <div class="cert reveal" style="--i:0"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Supply Chain Management Foundations & Project Management</div><div class="cert__meta">Instructor: <span>Daniel Stanton</span><br>Date: 26 July 2026</div></div>
-      <div class="cert reveal" style="--i:1"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Values Stream Mapping with Excel</div><div class="cert__meta">Instructor: <span>Daniel Stanton</span><br>Issuer: [add issuer] · Date: [add date]</div></div>
-      <div class="cert reveal" style="--i:2"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Applied Machine Learning</div><div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: 28 May 2025</div></div>
-      <div class="cert reveal" style="--i:3"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Machine Learning Systems</div><div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: 19 Juli 2025</div></div>
-      <div class="cert reveal" style="--i:4"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Data Processing (ETL)</div><div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: 01 May 2025</div></div>
-      <div class="cert reveal" style="--i:5"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">SAP Analytics Cloud &amp; SAP Build Apps</div><div class="cert__meta">Issuer: <span>ASEAN Data Science Explorers 2024</span> (SAP &amp; ASEAN Foundation)<br>Score: 100 · Date: 29 May 2024</div></div>
-      <div class="cert reveal" style="--i:6"><div class="cert__badge">UPLOAD: Badge / certificate image (landscape)</div><div class="cert__title">Six Sigma: Green Belt</div><div class="cert__meta">Instructor: <span>Richard Chua</span><br>Issuer: LinkedIn Learning · Date: 31 July 2026</div></div>
+      <div class="cert reveal" style="--i:0">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="https://github.com/mfznakbr/fauzan-portofolio/blob/main/Images/Supply%20Chain%20Foundation.png" alt="Supply Chain Management Foundations & Project Management certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">Supply Chain Management Foundations &amp; Project Management</div>
+        <div class="cert__meta">Instructor: <span>Daniel Stanton</span><br>Date: 26 July 2026</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
+      <div class="cert reveal" style="--i:1">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="PASTE-CERTIFICATE-IMAGE-LINK-HERE" alt="Value Stream Mapping with Excel certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">Value Stream Mapping with Excel</div>
+        <div class="cert__meta">Instructor: <span>Daniel Stanton</span><br>Issuer: [add issuer] · Date: [add date]</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
+      <div class="cert reveal" style="--i:2">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="PASTE-CERTIFICATE-IMAGE-LINK-HERE" alt="Applied Machine Learning certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">Applied Machine Learning</div>
+        <div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: 28 May 2025</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
+      <div class="cert reveal" style="--i:3">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="PASTE-CERTIFICATE-IMAGE-LINK-HERE" alt="Machine Learning Systems certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">Machine Learning Systems</div>
+        <div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: 19 July 2025</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
+      <div class="cert reveal" style="--i:4">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="PASTE-CERTIFICATE-IMAGE-LINK-HERE" alt="Data Processing (ETL) certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">Data Processing (ETL)</div>
+        <div class="cert__meta">Issuer: <span>Dicoding Indonesia</span><br>Date: 1 May 2025</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
+      <div class="cert reveal" style="--i:5">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="PASTE-CERTIFICATE-IMAGE-LINK-HERE" alt="SAP Analytics Cloud & SAP Build Apps certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">SAP Analytics Cloud &amp; SAP Build Apps</div>
+        <div class="cert__meta">Issuer: <span>ASEAN Data Science Explorers 2024</span> (SAP &amp; ASEAN Foundation)<br>Score: 100 · Date: 29 May 2024</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
+      <div class="cert reveal" style="--i:6">
+        <a class="cert__badge" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener"><img src="PASTE-CERTIFICATE-IMAGE-LINK-HERE" alt="Six Sigma: Green Belt certificate"><span class="cert__badge-fallback">Certificate image<br>— paste image link in the code —</span></a>
+        <div class="cert__title">Six Sigma: Green Belt</div>
+        <div class="cert__meta">Instructor: <span>Richard Chua</span><br>Issuer: LinkedIn Learning · Date: 31 July 2026</div>
+        <a class="cert__view" href="PASTE-FULL-CERTIFICATE-LINK-HERE" target="_blank" rel="noopener">View full certificate →</a>
+      </div>
     </div>
   </div>
 </section>
@@ -673,6 +720,29 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
     });
   }, {threshold:.6});
   document.querySelectorAll('[data-counter]').forEach(function(el){ counterObserver.observe(el); });
+
+  /* certificate image fallback — shows the placeholder pattern until a real link is pasted in */
+  document.querySelectorAll('.cert__badge img').forEach(function(img){
+    function showFallback(){
+      img.style.display = 'none';
+      var fb = img.nextElementSibling;
+      if(fb) fb.style.display = 'flex';
+    }
+    var src = img.getAttribute('src') || '';
+    if(!src || src.indexOf('PASTE') !== -1){ showFallback(); }
+    else { img.addEventListener('error', showFallback); }
+  });
+
+  /* profile photo + project photos — same idea: show the real image once a link replaces the PASTE-...-HERE placeholder */
+  document.querySelectorAll('.frame, .hero__frame').forEach(function(frame){
+    var img = frame.querySelector('img');
+    if(!img) return;
+    var src = img.getAttribute('src') || '';
+    if(src && src.indexOf('PASTE') === -1){
+      frame.classList.add('has-image');
+      img.addEventListener('error', function(){ frame.classList.remove('has-image'); });
+    }
+  });
 })();
 </script>
 </body>
