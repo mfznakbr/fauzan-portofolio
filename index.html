@@ -44,11 +44,11 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth; overflow-x:hidden;}
 body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:var(--font-body); font-size:16px; line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
 }
 img,svg{display:block;max-width:100%;}
 a{color:inherit;text-decoration:none;}
@@ -75,10 +75,17 @@ section{scroll-margin-top:76px;}
 }
 
 .btn{
+  position:relative; overflow:hidden;
   font-family:var(--font-mono); font-size:.8rem; letter-spacing:.04em; text-transform:uppercase;
   padding:.95em 1.6em; border-radius:2px; display:inline-flex; align-items:center; gap:.6em;
   transition:transform .3s var(--ease), background .3s var(--ease), box-shadow .3s var(--ease);
 }
+.btn::after{
+  content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.4), transparent);
+  transform:skewX(-20deg); transition:left .6s var(--ease); pointer-events:none;
+}
+.btn:hover::after{left:120%;}
 .btn svg{width:14px;height:14px;transition:transform .3s var(--ease);}
 .btn:hover svg{transform:translate(3px,-3px);}
 .btn--solid{background:var(--amber-500);color:var(--navy-950);}
@@ -121,6 +128,7 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 }
 
 /* ============================== NAV ============================== */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--teal-400),var(--amber-500));z-index:300;}
 .nav{
   position:fixed; top:0; left:0; right:0; z-index:100;
   display:flex; align-items:center; justify-content:space-between;
@@ -132,7 +140,8 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 }
 .nav.is-scrolled{border-bottom-color:var(--navy-line);padding-top:.75rem;padding-bottom:.75rem;}
 .nav__mark{font-family:var(--font-display);font-weight:800;font-size:1.3rem;color:var(--paper);display:flex;align-items:center;gap:.5rem;}
-.nav__mark span{width:30px;height:30px;background:var(--amber-500);color:var(--navy-950);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.82rem;}
+.nav__mark span{width:30px;height:30px;background:var(--amber-500);color:var(--navy-950);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:.82rem;animation:logo-pulse 3s ease-in-out infinite;}
+@keyframes logo-pulse{0%,100%{box-shadow:0 0 0 0 rgba(242,169,59,.4);}50%{box-shadow:0 0 14px 4px rgba(242,169,59,.35);}}
 .nav__links{display:flex;align-items:center;gap:var(--s4);}
 .nav__link{
   font-family:var(--font-mono); font-size:.74rem; letter-spacing:.06em; text-transform:uppercase;
@@ -143,9 +152,6 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .nav__link:hover::after,.nav__link.is-active::after{right:0;}
 .nav__cta{border:1px solid var(--navy-line);color:var(--paper);font-family:var(--font-mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;padding:.55em 1.1em;border-radius:2px;transition:all .3s var(--ease);}
 .nav__cta:hover{border-color:var(--amber-500);color:var(--amber-300);}
-.nav__gh{display:flex;align-items:center;color:rgba(243,239,227,.62);transition:color .3s var(--ease),transform .3s var(--ease);}
-.nav__gh:hover{color:var(--amber-300);transform:translateY(-2px);}
-.nav__gh svg{width:19px;height:19px;}
 .nav__toggle{display:none;width:26px;height:20px;position:relative;}
 .nav__toggle span{position:absolute;left:0;right:0;height:2px;background:var(--paper);transition:transform .3s var(--ease),opacity .3s var(--ease),top .3s var(--ease);}
 .nav__toggle span:nth-child(1){top:0;} .nav__toggle span:nth-child(2){top:9px;} .nav__toggle span:nth-child(3){top:18px;}
@@ -153,7 +159,7 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .nav.is-open .nav__toggle span:nth-child(2){opacity:0;}
 .nav.is-open .nav__toggle span:nth-child(3){top:9px;transform:rotate(-45deg);}
 @media (max-width:900px){
-  .nav__links{position:fixed;top:var(--nav-h,64px);left:0;right:0;bottom:0;height:auto;background:var(--navy-950);flex-direction:column;justify-content:center;gap:var(--s4);transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease);}
+  .nav__links{position:fixed;inset:64px 0 0 0;height:calc(100vh - 64px);background:var(--navy-950);flex-direction:column;justify-content:center;gap:var(--s4);transform:translateY(-8px);opacity:0;pointer-events:none;transition:opacity .35s var(--ease),transform .35s var(--ease);}
   .nav.is-open .nav__links{opacity:1;pointer-events:auto;transform:translateY(0);}
   .nav__links .nav__link{font-size:1rem;}
   .nav__toggle{display:block;}
@@ -191,6 +197,12 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 @keyframes pulse-scroll{0%,100%{transform:scaleY(1);opacity:.4;}50%{transform:scaleY(1.4);opacity:1;}}
 
 @media (max-width:980px){.hero__inner{grid-template-columns:1fr;}.hero__visual{order:-1;margin-bottom:var(--s3);}}
+
+.hero__glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;opacity:.5;}
+.hero__glow--teal{width:420px;height:420px;background:var(--teal-400);top:-130px;right:6%;animation:drift-a 17s ease-in-out infinite;}
+.hero__glow--amber{width:360px;height:360px;background:var(--amber-500);bottom:-150px;left:4%;animation:drift-b 21s ease-in-out infinite;}
+@keyframes drift-a{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-30px,40px) scale(1.12);}}
+@keyframes drift-b{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(40px,-30px) scale(1.08);}}
 
 /* ============================== SECTION SHELL ============================== */
 .eyebrow--dark{color:#9a6b1f;}
@@ -284,12 +296,9 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .stepper__item.is-done::before{content:"✓ ";color:var(--teal-400);}
 .stepper__item.is-next{opacity:.85;color:var(--amber-500);border-style:dashed;}
 
-.project__media{display:grid;grid-template-columns:1fr;gap:var(--s2);align-self:start;}
+.project__media{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);align-self:start;}
 .project__tags{margin-top:var(--s4);}
 
-@media (min-width:560px){
-  .project__media{grid-template-columns:1fr 1fr;gap:var(--s3);}
-}
 @media (min-width:981px){
   .project__media{grid-template-columns:1fr;gap:var(--s3);}
   figure.media .frame{aspect-ratio:16/10;}
@@ -299,17 +308,14 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
   .project__inner{grid-template-columns:1fr;}
   .project__media{order:-1;}
 }
-
-@media (max-width:980px) and (min-width:561px){
-  figure.media .frame{aspect-ratio:4/3;}
-}
+@media (max-width:560px){.project__media{grid-template-columns:1fr;}}
 
 /* ---- work: filter tabs ---- */
 .work-controls{margin-bottom:var(--s4);}
 .work-tabs{display:flex;flex-wrap:wrap;gap:.6rem;}
 .work-tab{
   font-family:var(--font-mono); font-size:.76rem; letter-spacing:.03em; text-transform:uppercase;
-  padding:.65em 1.1em; border:1px solid var(--paper-line); border-radius:999px;
+  padding:.65em 1.1em; border:1px solid var(--paper-line); border-radius:999px; white-space:nowrap;
   color:var(--ink-soft); background:var(--paper); display:inline-flex; align-items:center; gap:.5em;
   transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
 }
@@ -318,16 +324,31 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .work-tab.is-active{background:var(--navy-950);border-color:var(--navy-950);color:var(--paper);}
 .work-tab.is-active .work-tab__count{opacity:.85;}
 
-/* ---- work: horizontal rail ---- */
+/* ---- work: horizontal rail + carousel arrows ---- */
 .work-rail-wrap{position:relative;margin-top:var(--s4);}
-.work-rail-nav{position:absolute;top:-58px;right:var(--edge);display:flex;gap:.5rem;}
-.work-rail-btn{width:38px;height:38px;border:1px solid var(--paper-line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);transition:all .3s var(--ease);}
-.work-rail-btn:hover{border-color:#9a6b1f;color:#9a6b1f;transform:translateY(-2px);}
-.work-rail-btn svg{width:16px;height:16px;}
+
+.work-rail-arrow{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:6;
+  width:44px; height:44px; border-radius:50%; border:1px solid var(--paper-line);
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(244,240,228,.94); color:var(--ink);
+  box-shadow:0 12px 26px -10px rgba(13,17,23,.4);
+  transition:background .3s var(--ease), color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease), opacity .3s var(--ease);
+}
+.work-rail-arrow svg{width:18px;height:18px;}
+.work-rail-arrow:hover{background:var(--amber-500);color:var(--navy-950);transform:translateY(-50%) scale(1.1);box-shadow:0 16px 32px -10px rgba(242,169,59,.55);}
+.work-rail-arrow--prev{left:calc(var(--edge) - 22px);}
+.work-rail-arrow--next{right:calc(var(--edge) - 22px);}
+.work-rail-arrow.is-disabled{opacity:0;pointer-events:none;}
+@media (max-width:640px){
+  .work-rail-arrow{width:36px;height:36px;}
+  .work-rail-arrow--prev{left:6px;}
+  .work-rail-arrow--next{right:6px;}
+}
 
 .work-rail{
-  display:flex; gap:var(--s3); overflow-x:auto; scroll-snap-type:x proximity;
-  padding:.5rem var(--edge) var(--s3); margin:0 calc(var(--edge) * -1);
+  display:flex; gap:var(--s3); overflow-x:auto; scroll-snap-type:x mandatory;
+  padding:.5rem var(--edge) var(--s3);
   -webkit-overflow-scrolling:touch; cursor:grab;
   scrollbar-width:thin; scrollbar-color:var(--paper-line) transparent;
 }
@@ -336,13 +357,15 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .work-rail::-webkit-scrollbar-thumb{background:var(--paper-line);border-radius:3px;}
 
 .work-card{
-  flex:0 0 auto; width:min(320px,78vw); scroll-snap-align:start;
+  flex:0 0 auto; width:min(320px,78vw); scroll-snap-align:start; scroll-snap-stop:always;
   background:var(--paper); border:1px solid var(--paper-line); border-radius:8px; overflow:hidden;
   display:flex; flex-direction:column; cursor:pointer;
   transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
 }
 .work-card:hover,.work-card:focus-visible{transform:translateY(-6px);border-color:var(--amber-500);box-shadow:0 20px 38px -20px rgba(13,17,23,.28);outline:none;}
 .work-card__media{aspect-ratio:4/3;position:relative;flex:none;}
+.work-card__media img{transition:transform .5s var(--ease);}
+.work-card:hover .work-card__media img{transform:scale(1.07);}
 .work-card__body{padding:var(--s3);display:flex;flex-direction:column;gap:.6rem;flex:1;}
 .work-card__title{font-family:var(--font-display);font-weight:700;font-size:1.25rem;text-transform:uppercase;line-height:1.05;}
 .work-card__blurb{font-size:.88rem;color:var(--ink-soft);line-height:1.55;}
@@ -356,7 +379,13 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .work-card.is-placeholder .work-card__blurb{font-style:italic;}
 .work-card.is-hidden{display:none;}
 
-@media (max-width:640px){.work-rail-nav{display:none;}}
+/* one card per view on phones, two per view on tablets, natural row on desktop */
+@media (max-width:640px){
+  .work-card{width:100%;}
+}
+@media (min-width:641px) and (max-width:980px){
+  .work-card{width:calc((100% - var(--s3)) / 2);}
+}
 
 /* ---- work: case-study modal ---- */
 .work-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:5vh var(--edge);}
@@ -366,6 +395,7 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .work-modal__dialog.project--light{background:var(--paper);}
 .work-modal__dialog.project--dark{background:var(--navy-950);}
 .work-modal__inner{padding:var(--s5) var(--s4) var(--s4);}
+@media (max-width:640px){.work-modal__inner{padding:var(--s4) var(--s3) var(--s3);}}
 .work-modal__close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;line-height:1;background:rgba(128,128,128,.16);color:inherit;z-index:5;transition:background .3s var(--ease),transform .3s var(--ease);}
 .work-modal__close:hover{background:rgba(242,169,59,.28);transform:rotate(90deg);}
 .work-modal__inner .project__inner{display:block;}
@@ -378,7 +408,7 @@ body.modal-open{overflow:hidden;}
 .certs .section-head .eyebrow{color:#9a6b1f;}
 .certs__grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(260px,1fr));gap:var(--s3);}
 .cert{background:var(--paper-dim);border:1px solid var(--paper-line);padding:var(--s3);display:flex;flex-direction:column;gap:var(--s2);transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
-.cert:hover{transform:translateY(-6px);box-shadow:0 18px 34px -18px rgba(13,17,23,.25);}
+.cert:hover{transform:translateY(-6px) rotate(-.6deg);box-shadow:0 18px 34px -18px rgba(13,17,23,.25);}
 .cert__badge{position:relative;width:100%;aspect-ratio:1/.72;display:block;border:1.5px dashed var(--paper-line);border-radius:4px;overflow:hidden;background:repeating-linear-gradient(135deg, rgba(13,17,23,0.035) 0 2px, transparent 2px 14px);}
 .cert__badge img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s var(--ease);}
 .cert:hover .cert__badge img{transform:scale(1.04);}
@@ -397,9 +427,10 @@ body.modal-open{overflow:hidden;}
 .contact__lede{max-width:48ch;margin:var(--s3) auto 0;color:rgba(243,239,227,.68);}
 .contact__row{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem;margin-top:var(--s5);}
 .contact__links{margin-top:var(--s6);display:flex;justify-content:center;gap:var(--s4);flex-wrap:wrap;font-family:var(--font-mono);font-size:.85rem;}
-.contact__links a{display:inline-flex;align-items:center;gap:.5em;border-bottom:1px solid var(--navy-line);padding-bottom:.2em;transition:border-color .3s var(--ease),color .3s var(--ease);}
+.contact__links a{display:inline-flex;align-items:center;gap:.55em;border-bottom:1px solid var(--navy-line);padding-bottom:.2em;transition:border-color .3s var(--ease),color .3s var(--ease);}
+.contact__links a svg{width:16px;height:16px;flex:none;transition:transform .3s var(--ease);}
 .contact__links a:hover{border-color:var(--amber-500);color:var(--amber-300);}
-.contact__links svg{width:16px;height:16px;}
+.contact__links a:hover svg{transform:translateY(-2px) rotate(-6deg);}
 
 /* ============================== FOOTER ============================== */
 .footer{background:var(--navy-950);color:rgba(243,239,227,.45);padding:var(--s3) 0 var(--s4);border-top:1px solid var(--navy-line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;font-family:var(--font-mono);font-size:.7rem;}
@@ -413,6 +444,8 @@ body.modal-open{overflow:hidden;}
 </head>
 <body>
 
+<div class="scroll-progress" id="scrollProgress"></div>
+
 <nav class="nav" id="siteNav">
   <a href="#top" class="nav__mark"><span>M</span>Fauzani Akbar</a>
   <ul class="nav__links" id="navLinks">
@@ -422,7 +455,6 @@ body.modal-open{overflow:hidden;}
     <li><a class="nav__link" data-nav href="#skills">Skills</a></li>
     <li><a class="nav__link" data-nav href="#certifications">Certifications</a></li>
     <li><a class="nav__link" data-nav href="#contact">Contact</a></li>
-    <li><a class="nav__gh" href="https://github.com/mfznakbr" target="_blank" rel="noopener" aria-label="GitHub profile"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.02 3.26 9.28 7.78 10.78.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.17.69-3.84-1.35-3.84-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.53-.29-5.19-1.27-5.19-5.63 0-1.24.44-2.26 1.17-3.06-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.57.23 2.73.11 3.02.73.8 1.17 1.82 1.17 3.06 0 4.37-2.67 5.34-5.21 5.62.41.36.77 1.06.77 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A10.53 10.53 0 0 0 23.5 12.02C23.5 5.74 18.27.5 12 .5Z"/></svg></a></li>
     <li><a class="nav__cta" href="https://drive.google.com/drive/folders/1bovVMyqSr75MVW06wCQLUElD-abFkXHF?usp=drive_link" download>Download CV ↓</a></li>
   </ul>
   <button class="nav__toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
@@ -430,6 +462,8 @@ body.modal-open{overflow:hidden;}
 
 <!-- ============================== HERO ============================== -->
 <header class="hero" id="top">
+  <div class="hero__glow hero__glow--teal"></div>
+  <div class="hero__glow hero__glow--amber"></div>
   <div class="container hero__inner">
     <div class="hero__copy reveal">
       <p class="eyebrow hero__eyebrow">Port operations → data &amp; ml</p>
@@ -454,8 +488,8 @@ body.modal-open{overflow:hidden;}
         </div>
       </div>
       <div class="hero__stats">
-        <div class="hero__stat"><span>Internships</span><b>3</b></div>
-        <div class="hero__stat"><span>Conference paper</span><b>ICWET 2026</b></div>
+        <div class="hero__stat"><span>Internship</span><b>3</b></div>
+        <div class="hero__stat"><span>2 Publish Paper</span><b>ICWET</b></div>
         <div class="hero__stat"><span>Certifications</span><b>8+</b></div>
       </div>
     </div>
@@ -483,18 +517,18 @@ body.modal-open{overflow:hidden;}
         <div class="stat__source">Undergrad thesis</div>
       </div>
       <div class="stat reveal" style="--i:1">
-        <div class="stat__value">07-ICWET</div>
+        <div class="stat__value"><span data-suffix=" min">07-ICWET</span></div>
         <div class="stat__label">Machine Learning For Sugarcane Yield Prediction</div>
         <div class="stat__source">International Conference</div>
       </div>
       <div class="stat reveal" style="--i:2">
-        <div class="stat__value">2+1</div>
-        <div class="stat__label">Internships — Pelindo Regional 1 &amp; PTPN I Regional I &amp; Independent Study in Coding Camp</div>
-        <div class="stat__source">Hands-on experience</div>
+        <div class="stat__value">#<span data-counter data-target="2">2+1</span></div>
+        <div class="stat__label">	Internships — Pelindo Regional 1 & PTPN I Regional I & Independent Study in Coding Camp</div>
+        <div class="stat__source">Handson Experience</div>
       </div>
       <div class="stat reveal" style="--i:3">
         <div class="stat__value">Top 20/398</div>
-        <div class="stat__label">KomposKita — deep learning compost classifier &amp; duration model</div>
+        <div class="stat__label">KomposKita — deep learning compost classifier & duration model</div>
         <div class="stat__source">Coding Camp by DBS Foundation</div>
       </div>
     </div>
@@ -520,10 +554,8 @@ body.modal-open{overflow:hidden;}
   </div>
 
   <div class="work-rail-wrap reveal">
-    <div class="work-rail-nav">
-      <button class="work-rail-btn" data-rail-prev type="button" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-      <button class="work-rail-btn" data-rail-next type="button" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
-    </div>
+    <button class="work-rail-arrow work-rail-arrow--prev" data-rail-prev type="button" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button class="work-rail-arrow work-rail-arrow--next" data-rail-next type="button" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
     <div class="work-rail" id="workRail" tabindex="0" aria-label="Project cards — scroll horizontally"></div>
   </div>
 </section>
@@ -567,7 +599,8 @@ body.modal-open{overflow:hidden;}
         <div class="xp__role">Intern — Administrative</div>
         <div class="xp__org">PTPN I Regional I, Helvetia, North Sumatra</div>
         <div class="xp__body">
-          <p>Collected and recapped fuel consumption data for tractor fleets using Microsoft Excel to support field activity monitoring. Verified and updated administrative records of 100+ migrant workers to ensure accuracy of the plantation's workforce database.</p>
+          <p>Collected and recapped fuel consumption data for tractor fleets using Microsoft Excel to support field activity monitoring. Verified and updated administrative records of 100+ migrant workers to ensure accuracy of the plantation's workforce 
+database. </p>
         </div>
       </div>
     </div>
@@ -681,9 +714,9 @@ body.modal-open{overflow:hidden;}
       <a href="mailto:muhammadfauzaniakbar@gmail.com" class="btn btn--ghost">Email me<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
     </div>
     <div class="contact__links">
-      <a href="mailto:muhammadfauzaniakbar@gmail.com">muhammadfauzaniakbar@gmail.com</a>
-      <a href="https://www.linkedin.com/in/muhammad-fauzani-akbar-2a5g8" target="_blank" rel="noopener">linkedin.com/in/muhammad-fauzani-akbar</a>
-      <a href="https://github.com/mfznakbr" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.02 3.26 9.28 7.78 10.78.57.1.78-.25.78-.55 0-.27-.01-1.16-.02-2.1-3.17.69-3.84-1.35-3.84-1.35-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.34.95.1-.74.4-1.24.72-1.53-2.53-.29-5.19-1.27-5.19-5.63 0-1.24.44-2.26 1.17-3.06-.12-.29-.51-1.45.11-3.02 0 0 .96-.31 3.15 1.17a10.9 10.9 0 0 1 5.74 0c2.19-1.48 3.15-1.17 3.15-1.17.62 1.57.23 2.73.11 3.02.73.8 1.17 1.82 1.17 3.06 0 4.37-2.67 5.34-5.21 5.62.41.36.77 1.06.77 2.14 0 1.55-.01 2.79-.01 3.17 0 .3.2.66.79.55A10.53 10.53 0 0 0 23.5 12.02C23.5 5.74 18.27.5 12 .5Z"/></svg>github.com/mfznakbr</a>
+      <a href="mailto:muhammadfauzaniakbar@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>muhammadfauzaniakbar@gmail.com</a>
+      <a href="https://www.linkedin.com/in/muhammad-fauzani-akbar-2a5g8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>linkedin.com/in/muhammad-fauzani-akbar-2a5g8</a>
+      <a href="https://github.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg>github.com/[add your username]</a>
     </div>
   </div>
 </section>
@@ -697,15 +730,19 @@ body.modal-open{overflow:hidden;}
 (function(){
   var nav = document.getElementById('siteNav');
   var toggle = document.getElementById('navToggle');
-  function setNavHeight(){
-    document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
-  }
-  setNavHeight();
-  window.addEventListener('resize', setNavHeight, {passive:true});
-  window.addEventListener('scroll', function(){
+  var progressBar = document.getElementById('scrollProgress');
+  function updateChrome(){
     nav.classList.toggle('is-scrolled', window.scrollY > 20);
-    setNavHeight();
-  }, {passive:true});
+    if(progressBar){
+      var doc = document.documentElement;
+      var scrollable = doc.scrollHeight - doc.clientHeight;
+      var pct = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }
+  }
+  window.addEventListener('scroll', updateChrome, {passive:true});
+  window.addEventListener('resize', updateChrome);
+  updateChrome();
   toggle.addEventListener('click', function(){ nav.classList.toggle('is-open'); });
   document.querySelectorAll('[data-nav]').forEach(function(a){
     a.addEventListener('click', function(){ nav.classList.remove('is-open'); });
@@ -958,6 +995,7 @@ var WORK_PROJECTS = [
       card.classList.toggle('is-hidden', !show);
     });
     rail.scrollLeft = 0;
+    updateArrowState();
   }
 
   tabsWrap.addEventListener('click', function(e){
@@ -968,16 +1006,27 @@ var WORK_PROJECTS = [
     applyFilter(btn.getAttribute('data-filter'));
   });
 
-  /* prev/next arrow buttons */
+  /* prev/next arrow buttons — page by the rail's visible width so it works
+     whether 1, 2, or several cards are showing per breakpoint */
   var prevBtn = railWrap.querySelector('[data-rail-prev]');
   var nextBtn = railWrap.querySelector('[data-rail-next]');
-  function scrollByCard(dir){
-    var card = rail.querySelector('.work-card:not(.is-hidden)');
-    var amount = card ? card.getBoundingClientRect().width + 24 : 320;
-    rail.scrollBy({left: dir*amount, behavior:'smooth'});
+  function scrollByPage(dir){
+    rail.scrollBy({left: dir * rail.clientWidth, behavior:'smooth'});
   }
-  if(prevBtn) prevBtn.addEventListener('click', function(){ scrollByCard(-1); });
-  if(nextBtn) nextBtn.addEventListener('click', function(){ scrollByCard(1); });
+  if(prevBtn) prevBtn.addEventListener('click', function(){ scrollByPage(-1); });
+  if(nextBtn) nextBtn.addEventListener('click', function(){ scrollByPage(1); });
+
+  function updateArrowState(){
+    var max = rail.scrollWidth - rail.clientWidth;
+    if(prevBtn) prevBtn.classList.toggle('is-disabled', rail.scrollLeft <= 2);
+    if(nextBtn) nextBtn.classList.toggle('is-disabled', rail.scrollLeft >= max - 2);
+  }
+  var arrowRaf = null;
+  rail.addEventListener('scroll', function(){
+    if(arrowRaf) return;
+    arrowRaf = requestAnimationFrame(function(){ updateArrowState(); arrowRaf = null; });
+  }, {passive:true});
+  window.addEventListener('resize', updateArrowState);
 
   /* drag-to-scroll for desktop (native touch scroll already works on mobile) */
   (function(){
@@ -1039,6 +1088,7 @@ var WORK_PROJECTS = [
 
   renderCards();
   updateCounts();
+  updateArrowState();
 })();
 </script>
 </body>
