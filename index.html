@@ -232,8 +232,16 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .manifest{border:1px solid var(--paper-line);padding:var(--s3);background:var(--paper);transition:border-color .3s var(--ease), transform .3s var(--ease);}
 .manifest:hover{border-color:var(--amber-500);transform:translateY(-3px);}
 .manifest__id{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:#9a6b1f;margin-bottom:.9rem;display:block;}
-.manifest .tag-row .tag{color:var(--ink);border-color:var(--paper-line);transition:border-color .3s var(--ease), color .3s var(--ease);}
-.manifest .tag-row .tag:hover{border-color:#9a6b1f;color:#9a6b1f;}
+.manifest .tag-row .tag{
+  color:var(--ink); background:rgba(154,107,31,.08); border-color:rgba(154,107,31,.35); opacity:1;
+  transition:background .35s var(--ease), border-color .35s var(--ease), color .35s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.manifest .tag-row .tag:hover{
+  background:var(--amber-500); border-color:var(--amber-500); color:var(--navy-950);
+  transform:translateY(-3px) scale(1.06);
+  box-shadow:0 10px 22px -8px rgba(242,169,59,.6);
+}
+.manifest .tag-row .tag:active{transform:translateY(-1px) scale(1.02);}
 @media (max-width:860px){.skills__grid{grid-template-columns:1fr;}}
 
 /* ============================== PROJECTS ============================== */
@@ -287,6 +295,75 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 }
 @media (max-width:560px){.project__media{grid-template-columns:1fr;}}
 
+/* ---- work: filter tabs ---- */
+.work-controls{margin-bottom:var(--s4);}
+.work-tabs{display:flex;flex-wrap:wrap;gap:.6rem;}
+.work-tab{
+  font-family:var(--font-mono); font-size:.76rem; letter-spacing:.03em; text-transform:uppercase;
+  padding:.65em 1.1em; border:1px solid var(--paper-line); border-radius:999px;
+  color:var(--ink-soft); background:var(--paper); display:inline-flex; align-items:center; gap:.5em;
+  transition:background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease);
+}
+.work-tab__count{font-size:.78em;opacity:.7;}
+.work-tab:hover{border-color:#9a6b1f;color:#9a6b1f;transform:translateY(-2px);}
+.work-tab.is-active{background:var(--navy-950);border-color:var(--navy-950);color:var(--paper);}
+.work-tab.is-active .work-tab__count{opacity:.85;}
+
+/* ---- work: horizontal rail ---- */
+.work-rail-wrap{position:relative;margin-top:var(--s4);}
+.work-rail-nav{position:absolute;top:-62px;right:var(--edge);display:flex;gap:.5rem;}
+.work-rail-btn{width:38px;height:38px;border:1px solid var(--paper-line);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ink-soft);transition:all .3s var(--ease);}
+.work-rail-btn:hover{border-color:#9a6b1f;color:#9a6b1f;transform:translateY(-2px);}
+.work-rail-btn svg{width:16px;height:16px;}
+
+.work-rail{
+  display:flex; gap:var(--s3); overflow-x:auto; scroll-snap-type:x proximity;
+  padding:.5rem var(--edge) var(--s3); margin:0 calc(var(--edge) * -1);
+  -webkit-overflow-scrolling:touch; cursor:grab;
+  scrollbar-width:thin; scrollbar-color:var(--paper-line) transparent;
+}
+.work-rail.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none;}
+.work-rail::-webkit-scrollbar{height:6px;}
+.work-rail::-webkit-scrollbar-thumb{background:var(--paper-line);border-radius:3px;}
+
+.work-card{
+  flex:0 0 auto; width:min(320px,78vw); scroll-snap-align:start;
+  background:var(--paper); border:1px solid var(--paper-line); border-radius:8px; overflow:hidden;
+  display:flex; flex-direction:column; cursor:pointer;
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+}
+.work-card:hover,.work-card:focus-visible{transform:translateY(-6px);border-color:var(--amber-500);box-shadow:0 20px 38px -20px rgba(13,17,23,.28);outline:none;}
+.work-card__media{aspect-ratio:4/3;position:relative;flex:none;}
+.work-card__body{padding:var(--s3);display:flex;flex-direction:column;gap:.6rem;flex:1;}
+.work-card__title{font-family:var(--font-display);font-weight:700;font-size:1.25rem;text-transform:uppercase;line-height:1.05;}
+.work-card__blurb{font-size:.88rem;color:var(--ink-soft);line-height:1.55;}
+.work-card__cta{margin-top:auto;padding-top:.4rem;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.03em;text-transform:uppercase;color:#9a6b1f;display:inline-flex;align-items:center;gap:.4em;}
+.work-card__cta svg{width:12px;height:12px;transition:transform .3s var(--ease);}
+.work-card:hover .work-card__cta svg{transform:translate(3px,-3px);}
+.tag--sm{font-size:.64rem;padding:.32em .7em;}
+
+.work-card.is-placeholder{border-style:dashed;}
+.work-card.is-placeholder .work-card__title{color:var(--ink-faint);}
+.work-card.is-placeholder .work-card__blurb{font-style:italic;}
+.work-card.is-hidden{display:none;}
+
+@media (max-width:640px){.work-rail-nav{display:none;}}
+
+/* ---- work: case-study modal ---- */
+.work-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:5vh var(--edge);}
+.work-modal.is-open{display:flex;}
+.work-modal__backdrop{position:absolute;inset:0;background:rgba(6,15,26,.72);backdrop-filter:blur(4px);}
+.work-modal__dialog{position:relative;width:min(880px,100%);max-height:88vh;overflow-y:auto;border-radius:10px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);}
+.work-modal__dialog.project--light{background:var(--paper);}
+.work-modal__dialog.project--dark{background:var(--navy-950);}
+.work-modal__inner{padding:var(--s5) var(--s4) var(--s4);}
+.work-modal__close{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;line-height:1;background:rgba(128,128,128,.16);color:inherit;z-index:5;transition:background .3s var(--ease),transform .3s var(--ease);}
+.work-modal__close:hover{background:rgba(242,169,59,.28);transform:rotate(90deg);}
+.work-modal__inner .project__inner{display:block;}
+.work-modal__inner .project__title{max-width:none;}
+.work-modal__inner .project__media{margin-top:var(--s4);}
+body.modal-open{overflow:hidden;}
+
 /* ============================== CERTIFICATIONS ============================== */
 .certs{padding:var(--s7) 0;background:var(--paper);}
 .certs .section-head .eyebrow{color:#9a6b1f;}
@@ -330,9 +407,9 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
   <a href="#top" class="nav__mark"><span>M</span>Fauzani Akbar</a>
   <ul class="nav__links" id="navLinks">
     <li><a class="nav__link" data-nav href="#about">About</a></li>
+    <li><a class="nav__link" data-nav href="#work">Work</a></li>
     <li><a class="nav__link" data-nav href="#experience">Experience</a></li>
     <li><a class="nav__link" data-nav href="#skills">Skills</a></li>
-    <li><a class="nav__link" data-nav href="#work">Work</a></li>
     <li><a class="nav__link" data-nav href="#certifications">Certifications</a></li>
     <li><a class="nav__link" data-nav href="#contact">Contact</a></li>
     <li><a class="nav__cta" href="https://drive.google.com/drive/folders/1bovVMyqSr75MVW06wCQLUElD-abFkXHF?usp=drive_link" download>Download CV ↓</a></li>
@@ -413,6 +490,42 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
   </div>
 </section>
 
+<!-- ============================== PROJECTS ============================== -->
+<section id="work">
+  <div class="work-intro">
+    <div class="container reveal">
+      <p class="eyebrow">Featured work</p>
+      <h2 class="h-display">Four ways to make a terminal make sense.</h2>
+    </div>
+  </div>
+
+  <div class="container work-controls reveal">
+    <div class="work-tabs" role="tablist" aria-label="Filter projects by category">
+      <button class="work-tab is-active" data-filter="all" role="tab" aria-selected="true" type="button">All <span class="work-tab__count">(0)</span></button>
+      <button class="work-tab" data-filter="Data Analyst" role="tab" aria-selected="false" type="button">Data Analyst <span class="work-tab__count">(0)</span></button>
+      <button class="work-tab" data-filter="Research" role="tab" aria-selected="false" type="button">Research <span class="work-tab__count">(0)</span></button>
+      <button class="work-tab" data-filter="Machine Learning" role="tab" aria-selected="false" type="button">Machine Learning <span class="work-tab__count">(0)</span></button>
+    </div>
+  </div>
+
+  <div class="work-rail-wrap reveal">
+    <div class="work-rail-nav">
+      <button class="work-rail-btn" data-rail-prev type="button" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="work-rail-btn" data-rail-next type="button" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+    <div class="work-rail" id="workRail" tabindex="0" aria-label="Project cards — scroll horizontally"></div>
+  </div>
+</section>
+
+<!-- Work case-study modal — populated from WORK_PROJECTS by script at the end of the page -->
+<div class="work-modal" id="workModal" aria-hidden="true">
+  <div class="work-modal__backdrop" data-modal-close></div>
+  <div class="work-modal__dialog" id="workModalDialog" role="dialog" aria-modal="true">
+    <button class="work-modal__close" data-modal-close type="button" aria-label="Close case study">&times;</button>
+    <div class="work-modal__inner" id="workModalContent"></div>
+  </div>
+</div>
+
 <!-- ============================== EXPERIENCE ============================== -->
 <section class="experience" id="experience">
 <div class="container">
@@ -491,111 +604,6 @@ database. </p>
       </div>
     </div>
   </div>
-</section>
-
-<!-- ============================== PROJECTS ============================== -->
-<section id="work">
-<div class="work-intro">
-  <div class="container reveal">
-    <p class="eyebrow">Featured work</p>
-    <h2 class="h-display">Four ways to make a terminal make sense.</h2>
-  </div>
-</div>
-
-<!-- Project 1 — YOR Thesis -->
-<article class="project project--light">
-  <div class="container project__inner">
-    <div class="project__body reveal">
-      <div class="project__kicker"><p class="eyebrow">Undergraduate thesis · 2026</p></div>
-      <h3 class="h-display project__title">Modeling Yard Occupancy at Pelabuhan Belawan</h3>
-      <p class="project__block-label">Problem</p>
-      <p class="project__text">Pelabuhan Belawan needed a clearer read on what actually drives Yard Occupancy Ratio (YOR) — the KPI that signals when a container yard is running out of room.</p>
-      <p class="project__block-label">Approach</p>
-      <p class="project__text">Built a multiple regression model with Dwelling Time Ekspor and Throughput TEUs as predictors of YOR, run in SPSS. The dataset was limited to 15 months of data captured after Autogate 3 went live (n = 15) — deliberately excluding the pre-Autogate period so the model wouldn't mix two different operational regimes into one structural break. Power BI dashboards were built to present the findings at the thesis defense.</p>
-      <div class="metric">
-        <div class="metric__value">84.35%</div>
-        <div class="metric__label">R² — variance in YOR explained by Dwelling Time &amp; Throughput</div>
-      </div>
-      <div class="status-line">Sidang complete — <b>graduated</b>. Now being developed into a research funding proposal (proposal pendanaan penelitian) on the same variables.</div>
-      <div class="project__tags tag-row"><span class="tag">SPSS</span><span class="tag">Power BI</span><span class="tag">Multiple Regression</span><span class="tag">n = 15, post-Autogate 3</span></div>
-    </div>
-    <div class="project__media reveal">
-      <figure class="media"><a class="frame" href="PASTE-LINK-PROJECT1-FIG1-YOR-DASHBOARD" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/foto%20sidang.png" alt="Power BI dashboard — YOR model"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Sidang Documentation</span></div></a><figcaption><b>Fig. 1</b> — Documentation</figcaption></figure>
-      <figure class="media"><a class="frame" href="https://canva.link/35rgvzdx1xvpxyu" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/ppt%20sidang.jpg" alt="Thesis defense photo"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">Power Point</span></div></a><figcaption><b>Fig. 2</b> — Thesis Power Point</figcaption></figure>
-    </div>
-  </div>
-</article>
-
-<!-- Project 2 — Coding Camp -->
-<article class="project project--dark">
-  <div class="container project__inner">
-    <div class="project__body reveal">
-      <div class="project__kicker"><p class="eyebrow">KomposKita — Capstone Project</p></div>
-      <h3 class="h-display project__title">KomposKita — Waste Classification for Home Composting</h3>
-      <p class="project__block-label">Problem</p>
-      <p class="project__text">Most Indonesian households don't know how to sort their organic waste, so compostable waste ends up mixed with inorganic trash and lands in the TPA anyway — even though over 
-        60% of Indonesia's waste stream is organic (KLHK, 2023).</p>
-      <p class="project__block-label">Approach</p>
-      <p class="project__text">Built a deep learning image classifier — transfer learning on MobileNetV2, trained on 12,000+ labeled images — to sort waste into three categories: wet organic, dry organic, and non-compostable, reaching 94% train / 95% test accuracy. Wrapped it in a full-stack Next.js web app (Tailwind + FlyonUI, Prisma/PostgreSQL on Supabase) with a separate FastAPI inference service on Railway, plus a C/N ratio compost calculator and a community discussion forum. 
-        My role was on the ML side: dataset prep, model training/evaluation, and exporting the model for real-time inference in the app.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="metric__value" style="font-size:1.6rem">CC25-CF142</div><div class="metric__label">Team ID — Coding Camp powered by DBS Foundation</div></div>
-      </div>
-      <div class="status-line">Top 20 Team Among 398 Teams Across Indonesia Camp powered by DBS Foundation, Environment & Sustainability track 100% completed per project plan · live at kompos-kita.vercel.app</div>
-      <div class="project__tags tag-row"><span class="tag">TensorFlow</span><span class="tag">Deep Learning</span><span class="tag">MobileNetV2</span><span class="tag">Next.Js</span></div>
-    </div>
-    <div class="project__media reveal">
-      <figure class="media media--dark"><a class="frame" href="PASTE-LINK-PROJECT2-FIG1-STREAMLIT-DEMO" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/top%2020.jpg" alt="Streamlit demo screenshot"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 1</b> — Certification</figcaption></figure>
-      <figure class="media media--dark"><a class="frame" href="https://drive.google.com/file/d/1TBNzo_tiy7lFPDcMnH3kEHLy-1ODN_89/view" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/test%20model.png" alt="Feature importance chart"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></a><figcaption><b>Fig. 2</b> — Testing Model</figcaption></figure>
-    </div>
-  </div>
-</article>
-
-<!-- Project 3 — ICWET 2026 -->
-<article class="project project--dark">
-  <div class="container project__inner">
-    <div class="project__body reveal">
-      <div class="project__kicker"><p class="eyebrow">Conference paper · ICWET 2026</p></div>
-      <h3 class="h-display project__title">Predicting Sugarcane Yield with Random Forest</h3>
-      <p class="project__block-label">Problem</p>
-      <p class="project__text">PT Perkebunan Nusantara I Regional I, Helvetia, North Sumatra, needed a reliable way to forecast sugarcane yield ahead of harvest to plan processing capacity and logistics.</p>
-      <p class="project__block-label">Approach</p>
-      <p class="project__text">Chose a Random Forest model over simpler linear approaches because the agronomic relationships involved are non-linear and the field records are noisy — Random Forest handles both without heavy preprocessing or feature scaling. Built a live Streamlit demo of the model for the conference talk.</p>
-      <div class="metric-row">
-        <div class="metric"><div class="metric__value" style="font-size:1.6rem">07-ICWET-035</div><div class="metric__label">Paper ID — accepted after major revisions</div></div>
-      </div>
-      <div class="status-line">Presenting Aug 12–13, 2026 · hybrid · Sabah International Convention Centre — with a ~2–3 min live Streamlit demo built into the 10-minute talk. Co-authored with Harris Pinagaran Nasution (first author) and Dr. Erwinsyah Simanungkalit.</div>
-      <div class="project__tags tag-row"><span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Random Forest</span><span class="tag">Streamlit</span></div>
-    </div>
-    <div class="project__media reveal">
-      <figure class="media media--dark"><a class="frame" href="PASTE-LINK-PROJECT3-FIG1-STREAMLIT-DEMO" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/paper.png" alt="Streamlit demo screenshot"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 1</b> — Paper Abstract</figcaption></figure>
-      <figure class="media media--dark"><a class="frame" href="https://sugarcaneprediction-pt-perkebunan-nusantara-i-regional-i-pvn5d.streamlit.app/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/streamlit.png" alt="Feature importance chart"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></a><figcaption><b>Fig. 2</b> — Streamlit</figcaption></figure>
-    </div>
-  </div>
-</article>
-
-
-<!-- Project 4 — Six Sigma capstone -->
-<article class="project project--dark">
-  <div class="container project__inner">
-    <div class="project__body reveal">
-      <div class="project__kicker"><p class="eyebrow">Analyze Phase</p></div>
-      <h3 class="h-display project__title">Sugarcane Production Failure Root Cause Analysis Using Six Sigma DMAIC at PTPN</h3>
-      <p class="project__block-label">Problem</p>
-      <p class="project__text">PT Perkebunan Nusantara I Regional I's sugarcane production fell well below target in 2023, and 24 plantation blocks (~120 hectares) 
-        recorded zero harvest that year — with no clear explanation for why.</p>
-      <p class="project__block-label">Approach</p>
-      <p class="project__text">Applied the Six Sigma DMAIC framework to a real production dataset (287 blocks in 2023, 216 in 2024). Cleaned and loaded the data into SQL Server, then tested three candidate root causes — planting month, ratoon (regrowth) level, and seed variety — against the actual failure pattern rather than assuming the answer upfront. Found that harvest failures clustered specifically in blocks planted in April with ratoon stage R1 or R2 (accounting for the large majority of failures), while a separate analysis showed seed variety choice drove yield variation independently of that. 
-        Built a Power BI dashboard using proportional (percentage-based) comparisons rather than raw counts, so each hypothesis could be fairly tested against its baseline rate rather than misread from headline numbers alone. Built using SQL Server, Excel, and Power BI. Independent personal project using real PTPN production data. <b>Built using SQL Server, Excel, and Power BI. Independent personal project using real PTPN production data.</b></p>
-      <div class="metric"><div class="metric__value" style="font-size:1.7rem">5 phases</div><div class="metric__label">Define · Measure · Analyze · Improve · Control</div></div>
-      <div class="project__tags tag-row"><span class="tag">Six Sigma DMAIC</span><span class="tag">SQL Server</span><span class="tag">Power BI</span><span class="tag">Root Cause Analysis</span></div>
-    </div>
-    <div class="project__media reveal">
-      <figure class="media media--dark"><a class="frame" href="PASTE-LINK-PROJECT4-FIG1-CONTROL-CHART" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>
-      <figure class="media media--dark"><a class="frame" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>
-    </div>
-  </div>
-</article>
 </section>
 
 <!-- ============================== CERTIFICATIONS ============================== -->
@@ -761,6 +769,259 @@ database. </p>
       img.addEventListener('error', function(){ frame.classList.remove('has-image'); });
     }
   });
+})();
+</script>
+
+<!-- ============================== WORK: data + interactions ==============================
+     To add a new project later: copy one object below (a placeholder is easiest) and fill it
+     in — everything else (counts, filtering, cards, modal) updates automatically. -->
+<script>
+var WORK_PROJECTS = [
+  {
+    id:'yor-thesis', theme:'light', categoryTags:['Data Analyst','Research'],
+    kicker:'Undergraduate thesis · 2026',
+    title:'Modeling Yard Occupancy at Pelabuhan Belawan',
+    cardBlurb:'Pelindo Belawan needed a clearer read on what drives Yard Occupancy Ratio (YOR). Built a multiple regression model (Dwelling Time × Throughput) in SPSS, reaching 84.35% R².',
+    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/foto%20sidang.png',
+    thumbAlt:'Thesis defense documentation',
+    problem:'Pelabuhan Belawan needed a clearer read on what actually drives Yard Occupancy Ratio (YOR) — the KPI that signals when a container yard is running out of room.',
+    approach:'Built a multiple regression model with Dwelling Time Ekspor and Throughput TEUs as predictors of YOR, run in SPSS. The dataset was limited to 15 months of data captured after Autogate 3 went live (n = 15) — deliberately excluding the pre-Autogate period so the model wouldn\'t mix two different operational regimes into one structural break. Power BI dashboards were built to present the findings at the thesis defense.',
+    extrasHtml:'<div class="metric"><div class="metric__value">84.35%</div><div class="metric__label">R² — variance in YOR explained by Dwelling Time &amp; Throughput</div></div>'
+      +'<div class="status-line">Sidang complete — <b>graduated</b>. Now being developed into a research funding proposal (proposal pendanaan penelitian) on the same variables.</div>',
+    tagsHtml:'<span class="tag">SPSS</span><span class="tag">Power BI</span><span class="tag">Multiple Regression</span><span class="tag">n = 15, post-Autogate 3</span>',
+    mediaHtml:'<figure class="media"><a class="frame has-image" href="PASTE-LINK-PROJECT1-FIG1-YOR-DASHBOARD" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/foto%20sidang.png" alt="Power BI dashboard — YOR model" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Sidang Documentation</span></div></a><figcaption><b>Fig. 1</b> — Documentation</figcaption></figure>'
+      +'<figure class="media"><a class="frame has-image" href="https://canva.link/35rgvzdx1xvpxyu" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/ppt%20sidang.jpg" alt="Thesis defense photo" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">Power Point</span></div></a><figcaption><b>Fig. 2</b> — Thesis Power Point</figcaption></figure>'
+  },
+  {
+    id:'komposkita', theme:'dark', categoryTags:['Machine Learning'],
+    kicker:'KomposKita — Capstone Project',
+    title:'KomposKita — Waste Classification for Home Composting',
+    cardBlurb:'Most Indonesian households don\'t sort organic waste correctly. Built a deep learning image classifier (MobileNetV2 transfer learning, 12,000+ images, 94–95% accuracy) wrapped in a full-stack web app.',
+    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/top%2020.jpg',
+    thumbAlt:'KomposKita team certification',
+    problem:'Most Indonesian households don\'t know how to sort their organic waste, so compostable waste ends up mixed with inorganic trash and lands in the TPA anyway — even though over 60% of Indonesia\'s waste stream is organic (KLHK, 2023).',
+    approach:'Built a deep learning image classifier — transfer learning on MobileNetV2, trained on 12,000+ labeled images — to sort waste into three categories: wet organic, dry organic, and non-compostable, reaching 94% train / 95% test accuracy. Wrapped it in a full-stack Next.js web app (Tailwind + FlyonUI, Prisma/PostgreSQL on Supabase) with a separate FastAPI inference service on Railway, plus a C/N ratio compost calculator and a community discussion forum. My role was on the ML side: dataset prep, model training/evaluation, and exporting the model for real-time inference in the app.',
+    extrasHtml:'<div class="metric-row"><div class="metric"><div class="metric__value" style="font-size:1.6rem">CC25-CF142</div><div class="metric__label">Team ID — Coding Camp powered by DBS Foundation</div></div></div>'
+      +'<div class="status-line">Top 20 Team Among 398 Teams Across Indonesia Camp powered by DBS Foundation, Environment &amp; Sustainability track 100% completed per project plan · live at kompos-kita.vercel.app</div>',
+    tagsHtml:'<span class="tag">TensorFlow</span><span class="tag">Deep Learning</span><span class="tag">MobileNetV2</span><span class="tag">Next.Js</span>',
+    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT2-FIG1-STREAMLIT-DEMO" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/top%2020.jpg" alt="Streamlit demo screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 1</b> — Certification</figcaption></figure>'
+      +'<figure class="media media--dark"><a class="frame has-image" href="https://drive.google.com/file/d/1TBNzo_tiy7lFPDcMnH3kEHLy-1ODN_89/view" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/test%20model.png" alt="Feature importance chart" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></a><figcaption><b>Fig. 2</b> — Testing Model</figcaption></figure>'
+  },
+  {
+    id:'sugarcane-rf', theme:'dark', categoryTags:['Machine Learning','Research'],
+    kicker:'Conference paper · ICWET 2026',
+    title:'Predicting Sugarcane Yield with Random Forest',
+    cardBlurb:'PTPN I needed a reliable way to forecast sugarcane yield ahead of harvest. Built a Random Forest model — better suited than linear methods for noisy, non-linear agronomic data — with a live Streamlit demo.',
+    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/paper.png',
+    thumbAlt:'ICWET 2026 paper abstract',
+    problem:'PT Perkebunan Nusantara I Regional I, Helvetia, North Sumatra, needed a reliable way to forecast sugarcane yield ahead of harvest to plan processing capacity and logistics.',
+    approach:'Chose a Random Forest model over simpler linear approaches because the agronomic relationships involved are non-linear and the field records are noisy — Random Forest handles both without heavy preprocessing or feature scaling. Built a live Streamlit demo of the model for the conference talk.',
+    extrasHtml:'<div class="metric-row"><div class="metric"><div class="metric__value" style="font-size:1.6rem">07-ICWET-035</div><div class="metric__label">Paper ID — accepted after major revisions</div></div></div>'
+      +'<div class="status-line">Presenting Aug 12–13, 2026 · hybrid · Sabah International Convention Centre — with a ~2–3 min live Streamlit demo built into the 10-minute talk. Co-authored with Harris Pinagaran Nasution (first author) and Dr. Erwinsyah Simanungkalit.</div>',
+    tagsHtml:'<span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Random Forest</span><span class="tag">Streamlit</span>',
+    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT3-FIG1-STREAMLIT-DEMO" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/paper.png" alt="Streamlit demo screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 1</b> — Paper Abstract</figcaption></figure>'
+      +'<figure class="media media--dark"><a class="frame has-image" href="https://sugarcaneprediction-pt-perkebunan-nusantara-i-regional-i-pvn5d.streamlit.app/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/streamlit.png" alt="Feature importance chart" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></a><figcaption><b>Fig. 2</b> — Streamlit</figcaption></figure>'
+  },
+  {
+    id:'six-sigma-dmaic', theme:'dark', categoryTags:['Data Analyst'],
+    kicker:'Analyze Phase',
+    title:'Sugarcane Production Failure Root Cause Analysis Using Six Sigma DMAIC at PTPN',
+    cardBlurb:'PTPN\'s sugarcane production fell below target in 2023, with 24 blocks recording zero harvest and no clear cause. Applied Six Sigma DMAIC to production data in SQL Server and found failures clustered in April-planted, ratoon-stage R1/R2 blocks.',
+    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png',
+    thumbAlt:'DMAIC analysis dashboard',
+    problem:'PT Perkebunan Nusantara I Regional I\'s sugarcane production fell well below target in 2023, and 24 plantation blocks (~120 hectares) recorded zero harvest that year — with no clear explanation for why.',
+    approach:'Applied the Six Sigma DMAIC framework to a real production dataset (287 blocks in 2023, 216 in 2024). Cleaned and loaded the data into SQL Server, then tested three candidate root causes — planting month, ratoon (regrowth) level, and seed variety — against the actual failure pattern rather than assuming the answer upfront. Found that harvest failures clustered specifically in blocks planted in April with ratoon stage R1 or R2 (accounting for the large majority of failures), while a separate analysis showed seed variety choice drove yield variation independently of that. Built a Power BI dashboard using proportional (percentage-based) comparisons rather than raw counts, so each hypothesis could be fairly tested against its baseline rate rather than misread from headline numbers alone. Independent personal project using real PTPN production data.',
+    extrasHtml:'<div class="metric"><div class="metric__value" style="font-size:1.7rem">5 phases</div><div class="metric__label">Define · Measure · Analyze · Improve · Control</div></div>',
+    tagsHtml:'<span class="tag">Six Sigma DMAIC</span><span class="tag">SQL Server</span><span class="tag">Power BI</span><span class="tag">Root Cause Analysis</span>',
+    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG1-CONTROL-CHART" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
+      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+  },
+  {
+    id:'placeholder-ml-1', theme:'light', categoryTags:['Machine Learning'], isPlaceholder:true,
+    kicker:'Upcoming project', title:'[TODO: Replace] Machine Learning project 1',
+    cardBlurb:'[TODO: replace] — add a condensed 2–3 sentence Problem + Approach blurb here.',
+    problem:'[TODO: replace] — describe the problem this project addressed.',
+    approach:'[TODO: replace] — describe the approach, model, and tools used, plus any results.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>'
+  },
+  {
+    id:'placeholder-ml-2', theme:'dark', categoryTags:['Machine Learning'], isPlaceholder:true,
+    kicker:'Upcoming project', title:'[TODO: Replace] Machine Learning project 2',
+    cardBlurb:'[TODO: replace] — add a condensed 2–3 sentence Problem + Approach blurb here.',
+    problem:'[TODO: replace] — describe the problem this project addressed.',
+    approach:'[TODO: replace] — describe the approach, model, and tools used, plus any results.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>'
+  },
+  {
+    id:'placeholder-ml-3', theme:'light', categoryTags:['Machine Learning'], isPlaceholder:true,
+    kicker:'Upcoming project', title:'[TODO: Replace] Machine Learning project 3',
+    cardBlurb:'[TODO: replace] — add a condensed 2–3 sentence Problem + Approach blurb here.',
+    problem:'[TODO: replace] — describe the problem this project addressed.',
+    approach:'[TODO: replace] — describe the approach, model, and tools used, plus any results.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>'
+  },
+  {
+    id:'placeholder-ml-4', theme:'dark', categoryTags:['Machine Learning'], isPlaceholder:true,
+    kicker:'Upcoming project', title:'[TODO: Replace] Machine Learning project 4',
+    cardBlurb:'[TODO: replace] — add a condensed 2–3 sentence Problem + Approach blurb here.',
+    problem:'[TODO: replace] — describe the problem this project addressed.',
+    approach:'[TODO: replace] — describe the approach, model, and tools used, plus any results.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>'
+  },
+  {
+    id:'placeholder-etl', theme:'light', categoryTags:['Data Analyst'], isPlaceholder:true,
+    kicker:'Upcoming project', title:'[TODO: Replace] ETL pipeline project',
+    cardBlurb:'[TODO: replace] — this one will cover an ETL pipeline project. Add a condensed blurb here.',
+    problem:'[TODO: replace] — describe the data problem this ETL pipeline solved.',
+    approach:'[TODO: replace] — describe the pipeline, tools, and outcome.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Data Analyst</span>'
+  }
+];
+
+(function(){
+  var rail = document.getElementById('workRail');
+  var railWrap = document.querySelector('.work-rail-wrap');
+  var tabsWrap = document.querySelector('.work-tabs');
+  var modal = document.getElementById('workModal');
+  var modalDialog = document.getElementById('workModalDialog');
+  var modalContent = document.getElementById('workModalContent');
+  var lastFocused = null;
+  if(!rail || !tabsWrap || !modal) return;
+
+  function placeholderMediaHTML(){
+    return '<figure class="media"><div class="frame"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M8 12h8M12 8v8"/></svg><span class="placeholder__label">Visuals to be added</span></div></div><figcaption><b>Fig.</b> — Coming soon</figcaption></figure>';
+  }
+
+  function cardMediaHTML(p){
+    if(p.thumb){
+      return '<img src="'+p.thumb+'" alt="'+(p.thumbAlt||p.title)+'" loading="lazy" onerror="this.closest(\'.work-card__media\').classList.remove(\'has-image\')">';
+    }
+    return '<div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M8 12h8M12 8v8"/></svg><span class="placeholder__label">Visual coming soon</span></div>';
+  }
+
+  function renderCards(){
+    rail.innerHTML = WORK_PROJECTS.map(function(p, idx){
+      var tagsHtml = p.categoryTags.map(function(t){ return '<span class="tag tag--sm">'+t+'</span>'; }).join('');
+      return '<article class="work-card'+(p.isPlaceholder ? ' is-placeholder' : '')+'" data-index="'+idx+'" data-tags="'+p.categoryTags.join(',')+'" tabindex="0" role="button" aria-haspopup="dialog">'
+        + '<div class="work-card__media frame'+(p.thumb ? ' has-image' : '')+'">'+cardMediaHTML(p)+'</div>'
+        + '<div class="work-card__body">'
+          + '<div class="work-card__tags tag-row">'+tagsHtml+'</div>'
+          + '<h3 class="work-card__title">'+p.title+'</h3>'
+          + '<p class="work-card__blurb">'+p.cardBlurb+'</p>'
+          + '<span class="work-card__cta">View case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></span>'
+        + '</div>'
+      + '</article>';
+    }).join('');
+
+    Array.prototype.forEach.call(rail.querySelectorAll('.work-card'), function(card){
+      card.addEventListener('click', function(){
+        if(rail.dataset.dragged === '1') return;
+        openModal(WORK_PROJECTS[+card.dataset.index], card);
+      });
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openModal(WORK_PROJECTS[+card.dataset.index], card); }
+      });
+    });
+  }
+
+  function updateCounts(){
+    var counts = {all: WORK_PROJECTS.length};
+    WORK_PROJECTS.forEach(function(p){ p.categoryTags.forEach(function(t){ counts[t] = (counts[t]||0)+1; }); });
+    Array.prototype.forEach.call(tabsWrap.querySelectorAll('.work-tab'), function(tab){
+      var f = tab.getAttribute('data-filter');
+      var c = f === 'all' ? counts.all : (counts[f]||0);
+      tab.querySelector('.work-tab__count').textContent = '('+c+')';
+    });
+  }
+
+  function applyFilter(filter){
+    Array.prototype.forEach.call(rail.querySelectorAll('.work-card'), function(card){
+      var tags = card.getAttribute('data-tags').split(',');
+      var show = filter === 'all' || tags.indexOf(filter) !== -1;
+      card.classList.toggle('is-hidden', !show);
+    });
+    rail.scrollLeft = 0;
+  }
+
+  tabsWrap.addEventListener('click', function(e){
+    var btn = e.target.closest('.work-tab');
+    if(!btn) return;
+    Array.prototype.forEach.call(tabsWrap.querySelectorAll('.work-tab'), function(t){ t.classList.remove('is-active'); t.setAttribute('aria-selected','false'); });
+    btn.classList.add('is-active'); btn.setAttribute('aria-selected','true');
+    applyFilter(btn.getAttribute('data-filter'));
+  });
+
+  /* prev/next arrow buttons */
+  var prevBtn = railWrap.querySelector('[data-rail-prev]');
+  var nextBtn = railWrap.querySelector('[data-rail-next]');
+  function scrollByCard(dir){
+    var card = rail.querySelector('.work-card:not(.is-hidden)');
+    var amount = card ? card.getBoundingClientRect().width + 24 : 320;
+    rail.scrollBy({left: dir*amount, behavior:'smooth'});
+  }
+  if(prevBtn) prevBtn.addEventListener('click', function(){ scrollByCard(-1); });
+  if(nextBtn) nextBtn.addEventListener('click', function(){ scrollByCard(1); });
+
+  /* drag-to-scroll for desktop (native touch scroll already works on mobile) */
+  (function(){
+    var isDown = false, startX = 0, startScroll = 0, moved = 0;
+    rail.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'touch') return;
+      isDown = true; moved = 0; rail.classList.add('is-dragging');
+      startX = e.clientX; startScroll = rail.scrollLeft;
+      rail.setPointerCapture(e.pointerId);
+    });
+    rail.addEventListener('pointermove', function(e){
+      if(!isDown) return;
+      var dx = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(dx));
+      rail.scrollLeft = startScroll - dx;
+    });
+    function endDrag(){
+      if(!isDown) return;
+      isDown = false; rail.classList.remove('is-dragging');
+      rail.dataset.dragged = moved > 6 ? '1' : '0';
+      setTimeout(function(){ rail.dataset.dragged = '0'; }, 50);
+    }
+    rail.addEventListener('pointerup', endDrag);
+    rail.addEventListener('pointerleave', endDrag);
+  })();
+
+  /* modal */
+  function openModal(p, triggerEl){
+    lastFocused = triggerEl || document.activeElement;
+    modalDialog.className = 'work-modal__dialog project--' + p.theme;
+    modalContent.innerHTML =
+      '<div class="project__kicker"><p class="eyebrow">'+p.kicker+'</p></div>'
+      + '<h3 class="h-display project__title" style="font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:var(--s3)">'+p.title+'</h3>'
+      + '<p class="project__block-label">Problem</p>'
+      + '<p class="project__text">'+p.problem+'</p>'
+      + '<p class="project__block-label">Approach</p>'
+      + '<p class="project__text">'+p.approach+'</p>'
+      + (p.extrasHtml || '')
+      + '<div class="project__tags tag-row">'+(p.tagsHtml || '')+'</div>'
+      + '<div class="project__media">'+(p.mediaHtml || placeholderMediaHTML())+'</div>';
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    var closeBtn = modalDialog.querySelector('.work-modal__close');
+    if(closeBtn) closeBtn.focus();
+  }
+  function closeModal(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+    document.body.classList.remove('modal-open');
+    if(lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+  modal.addEventListener('click', function(e){
+    if(e.target.hasAttribute('data-modal-close')) closeModal();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+  });
+
+  renderCards();
+  updateCounts();
 })();
 </script>
 </body>
