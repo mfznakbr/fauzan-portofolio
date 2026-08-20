@@ -170,10 +170,18 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
   position:relative; min-height:92vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden;
   padding:150px 0 var(--s5);
   background:
-    radial-gradient(ellipse 70% 55% at 80% 15%, rgba(51,194,179,.14), transparent 60%),
-    radial-gradient(ellipse 60% 45% at 12% 88%, rgba(242,169,59,.09), transparent 60%),
+    radial-gradient(ellipse 70% 55% at 80% 15%, rgba(51,194,179,.16), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 12% 88%, rgba(242,169,59,.11), transparent 60%),
     linear-gradient(160deg, var(--navy-950), var(--navy-900) 60%, var(--navy-950));
+  background-size:160% 160%, 160% 160%, 100% 100%;
+  background-repeat:no-repeat;
+  animation:hero-bg-drift 24s ease-in-out infinite alternate;
   color:var(--paper);
+}
+@keyframes hero-bg-drift{
+  0%{background-position:80% 15%, 12% 88%, 0 0;}
+  50%{background-position:58% 34%, 32% 66%, 0 0;}
+  100%{background-position:88% 6%, 6% 96%, 0 0;}
 }
 .hero__inner{position:relative;z-index:2;display:grid;grid-template-columns:1.2fr .8fr;gap:var(--s5);align-items:center;}
 .hero__eyebrow{color:var(--teal-300);margin-bottom:var(--s3);}
@@ -298,6 +306,7 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 
 .project__media{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);align-self:start;}
 .project__tags{margin-top:var(--s4);}
+.project__link-btn{margin:var(--s1) 0 var(--s4);}
 
 @media (min-width:981px){
   .project__media{grid-template-columns:1fr;gap:var(--s3);}
@@ -357,12 +366,26 @@ figcaption b{color:var(--ink-soft);font-weight:600;}
 .work-rail::-webkit-scrollbar-thumb{background:var(--paper-line);border-radius:3px;}
 
 .work-card{
+  position:relative;
   flex:0 0 auto; width:min(320px,78vw); scroll-snap-align:start; scroll-snap-stop:always;
-  background:var(--paper); border:1px solid var(--paper-line); border-radius:8px; overflow:hidden;
+  background:var(--paper-dim); border:1px solid var(--paper-line); border-radius:8px; overflow:hidden;
   display:flex; flex-direction:column; cursor:pointer;
-  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease);
+  box-shadow:0 1px 2px rgba(13,17,23,.05);
+  transition:transform .35s var(--ease), border-color .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
 }
-.work-card:hover,.work-card:focus-visible{transform:translateY(-6px);border-color:var(--amber-500);box-shadow:0 20px 38px -20px rgba(13,17,23,.28);outline:none;}
+.work-card::before{
+  content:""; position:absolute; top:0; left:0; right:0; height:3px; z-index:2;
+  background:linear-gradient(90deg, var(--amber-500), var(--teal-400));
+  transform:scaleX(0); transform-origin:left; transition:transform .4s var(--ease);
+}
+.work-card:hover,.work-card:focus-visible{
+  transform:translateY(-8px);
+  background:var(--paper);
+  border-color:var(--amber-500);
+  box-shadow:0 24px 44px -18px rgba(13,17,23,.32), 0 0 0 1px rgba(242,169,59,.14);
+  outline:none;
+}
+.work-card:hover::before,.work-card:focus-visible::before{transform:scaleX(1);}
 .work-card__media{aspect-ratio:4/3;position:relative;flex:none;}
 .work-card__media img{transition:transform .5s var(--ease);}
 .work-card:hover .work-card__media img{transform:scale(1.07);}
@@ -736,7 +759,7 @@ database. </p>
     <div class="contact__links">
       <a href="mailto:muhammadfauzaniakbar@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>muhammadfauzaniakbar@gmail.com</a>
       <a href="https://www.linkedin.com/in/muhammad-fauzani-akbar-2a5g8" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 10a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>linkedin.com/in/muhammad-fauzani-akbar-2a5g8</a>
-      <a href="https://github.com/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg>github.com/[add your username]</a>
+      <a href="https://github.com/mfznakbr" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg>github.com/mfznakbr</a>
     </div>
   </div>
 </section>
@@ -852,7 +875,7 @@ database. </p>
 <script>
 var WORK_PROJECTS = [
   {
-    id:'yor-thesis', theme:'light', categoryTags:['Data Analyst','Research'],
+    id:'yor-thesis', theme:'light', categoryTags:['Data Analyst','Research'], link:'', linkLabel:'',
     kicker:'Undergraduate thesis · 2026',
     title:'Modeling Yard Occupancy at Pelabuhan Belawan',
     cardBlurb:'Pelindo Belawan needed a clearer read on what drives Yard Occupancy Ratio (YOR). Built a multiple regression model (Dwelling Time × Throughput) in SPSS, reaching 84.35% R².',
@@ -863,11 +886,11 @@ var WORK_PROJECTS = [
     extrasHtml:'<div class="metric"><div class="metric__value">84.35%</div><div class="metric__label">R² — variance in YOR explained by Dwelling Time &amp; Throughput</div></div>'
       +'<div class="status-line">Sidang complete — <b>graduated</b>. Now being developed into a research funding proposal (proposal pendanaan penelitian) on the same variables.</div>',
     tagsHtml:'<span class="tag">SPSS</span><span class="tag">Power BI</span><span class="tag">Multiple Regression</span><span class="tag">n = 15, post-Autogate 3</span>',
-    mediaHtml:'<figure class="media"><a class="frame has-image" href="PASTE-LINK-PROJECT1-FIG1-YOR-DASHBOARD" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/foto%20sidang.png" alt="Power BI dashboard — YOR model" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Sidang Documentation</span></div></a><figcaption><b>Fig. 1</b> — Documentation</figcaption></figure>'
-      +'<figure class="media"><a class="frame has-image" href="https://canva.link/35rgvzdx1xvpxyu" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/ppt%20sidang.jpg" alt="Thesis defense photo" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">Power Point</span></div></a><figcaption><b>Fig. 2</b> — Thesis Power Point</figcaption></figure>'
+    mediaHtml:'<figure class="media"><a class="frame has-image" href="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/foto%20sidang.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/foto%20sidang.png" alt="Thesis defense (sidang) documentation photo" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M7 15V9M12 15v-3M17 15V7"/></svg><span class="placeholder__label">UPLOAD: Sidang documentation</span></div></a><figcaption><b>Fig. 1</b> — Documentation</figcaption></figure>'
+      +'<figure class="media"><a class="frame has-image" href="https://canva.link/35rgvzdx1xvpxyu" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/ppt%20sidang.jpg" alt="Thesis defense presentation slide" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><span class="placeholder__label">Power Point</span></div></a><figcaption><b>Fig. 2</b> — Thesis Power Point</figcaption></figure>'
   },
   {
-    id:'komposkita', theme:'dark', categoryTags:['Machine Learning'],
+    id:'komposkita', theme:'dark', categoryTags:['Machine Learning'], link:'', linkLabel:'',
     kicker:'KomposKita — Capstone Project',
     title:'KomposKita — Waste Classification for Home Composting',
     cardBlurb:'Most Indonesian households don\'t sort organic waste correctly. Built a deep learning image classifier (MobileNetV2 transfer learning, 12,000+ images, 94–95% accuracy) wrapped in a full-stack web app.',
@@ -878,11 +901,11 @@ var WORK_PROJECTS = [
     extrasHtml:'<div class="metric-row"><div class="metric"><div class="metric__value" style="font-size:1.6rem">CC25-CF142</div><div class="metric__label">Team ID — Coding Camp powered by DBS Foundation</div></div></div>'
       +'<div class="status-line">Top 20 Team Among 398 Teams Across Indonesia Camp powered by DBS Foundation, Environment &amp; Sustainability track 100% completed per project plan · live at kompos-kita.vercel.app</div>',
     tagsHtml:'<span class="tag">TensorFlow</span><span class="tag">Deep Learning</span><span class="tag">MobileNetV2</span><span class="tag">Next.Js</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://drive.google.com/file/d/1TBNzo_tiy7lFPDcMnH3kEHLy-1ODN_89/view" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/top%2020.jpg" alt="Streamlit demo screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 1</b> — Certification</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="https://drive.google.com/file/d/1TBNzo_tiy7lFPDcMnH3kEHLy-1ODN_89/view" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/test%20model.png" alt="Feature importance chart" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></a><figcaption><b>Fig. 2</b> — Testing Model</figcaption></figure>'
+    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://drive.google.com/file/d/1TBNzo_tiy7lFPDcMnH3kEHLy-1ODN_89/view" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/top%2020.jpg" alt="Top 20 of 398 teams certificate" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Top 20 certificate</span></div></a><figcaption><b>Fig. 1</b> — Certification</figcaption></figure>'
+      +'<figure class="media media--dark"><a class="frame has-image" href="https://drive.google.com/file/d/1TBNzo_tiy7lFPDcMnH3kEHLy-1ODN_89/view" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/test%20model.png" alt="Model testing screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Model testing screenshot</span></div></a><figcaption><b>Fig. 2</b> — Testing Model</figcaption></figure>'
   },
   {
-    id:'sugarcane-rf', theme:'dark', categoryTags:['Machine Learning','Research'],
+    id:'sugarcane-rf', theme:'dark', categoryTags:['Machine Learning','Research'], link:'', linkLabel:'',
     kicker:'Conference paper · ICWET 2026',
     title:'Predicting Sugarcane Yield with Random Forest',
     cardBlurb:'PTPN I needed a reliable way to forecast sugarcane yield ahead of harvest. Built a Random Forest model — better suited than linear methods for noisy, non-linear agronomic data — with a live Streamlit demo.',
@@ -893,11 +916,11 @@ var WORK_PROJECTS = [
     extrasHtml:'<div class="metric-row"><div class="metric"><div class="metric__value" style="font-size:1.6rem">07-ICWET-035</div><div class="metric__label">Paper ID — accepted after major revisions</div></div></div>'
       +'<div class="status-line">Presenting Aug 12–13, 2026 · hybrid · Sabah International Convention Centre — with a ~2–3 min live Streamlit demo built into the 10-minute talk. Co-authored with Harris Pinagaran Nasution (first author) and Dr. Erwinsyah Simanungkalit.</div>',
     tagsHtml:'<span class="tag">Python</span><span class="tag">Scikit-learn</span><span class="tag">Random Forest</span><span class="tag">Streamlit</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://sugarcaneprediction-pt-perkebunan-nusantara-i-regional-i-pvn5d.streamlit.app/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/paper.png" alt="Streamlit demo screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 1</b> — Paper Abstract</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="https://sugarcaneprediction-pt-perkebunan-nusantara-i-regional-i-pvn5d.streamlit.app/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/streamlit.png" alt="Feature importance chart" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Feature importance chart</span></div></a><figcaption><b>Fig. 2</b> — Streamlit</figcaption></figure>'
+    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://sugarcaneprediction-pt-perkebunan-nusantara-i-regional-i-pvn5d.streamlit.app/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/paper.png" alt="ICWET 2026 paper abstract screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="14" rx="1"/><path d="M8 20h8M12 18v2"/></svg><span class="placeholder__label">UPLOAD: Paper abstract screenshot</span></div></a><figcaption><b>Fig. 1</b> — Paper Abstract</figcaption></figure>'
+      +'<figure class="media media--dark"><a class="frame has-image" href="https://sugarcaneprediction-pt-perkebunan-nusantara-i-regional-i-pvn5d.streamlit.app/" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/streamlit.png" alt="Streamlit demo app screenshot" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h4V9H4zM10 19h4V5h-4zM16 19h4v-7h-4z"/></svg><span class="placeholder__label">UPLOAD: Streamlit demo screenshot</span></div></a><figcaption><b>Fig. 2</b> — Streamlit</figcaption></figure>'
   },
   {
-    id:'six-sigma-dmaic', theme:'dark', categoryTags:['Data Analyst'],
+    id:'six-sigma-dmaic', theme:'dark', categoryTags:['Data Analyst'], link:'', linkLabel:'',
     kicker:'Analyze Phase',
     title:'Sugarcane Production Failure Root Cause Analysis Using Six Sigma DMAIC at PTPN',
     cardBlurb:'PTPN\'s sugarcane production fell below target in 2023, with 24 blocks recording zero harvest and no clear cause. Applied Six Sigma DMAIC to production data in SQL Server and found failures clustered in April-planted, ratoon-stage R1/R2 blocks.',
@@ -907,68 +930,58 @@ var WORK_PROJECTS = [
     approach:'Applied the Six Sigma DMAIC framework to a real production dataset (287 blocks in 2023, 216 in 2024). Cleaned and loaded the data into SQL Server, then tested three candidate root causes — planting month, ratoon (regrowth) level, and seed variety — against the actual failure pattern rather than assuming the answer upfront. Found that harvest failures clustered specifically in blocks planted in April with ratoon stage R1 or R2 (accounting for the large majority of failures), while a separate analysis showed seed variety choice drove yield variation independently of that. Built a Power BI dashboard using proportional (percentage-based) comparisons rather than raw counts, so each hypothesis could be fairly tested against its baseline rate rather than misread from headline numbers alone. Independent personal project using real PTPN production data.',
     extrasHtml:'<div class="metric"><div class="metric__value" style="font-size:1.7rem">5 phases</div><div class="metric__label">Define · Measure · Analyze · Improve · Control</div></div>',
     tagsHtml:'<span class="tag">Six Sigma DMAIC</span><span class="tag">SQL Server</span><span class="tag">Power BI</span><span class="tag">Root Cause Analysis</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG1-CONTROL-CHART" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Power BI DMAIC analysis dashboard" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Power BI dashboard</span></div></a><figcaption><b>Fig. 1</b> — Analysis dashboard</figcaption></figure>'
+      +'<figure class="media media--dark"><a class="frame has-image" href="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: SQL Server query</span></div></a><figcaption><b>Fig. 2</b> — SQL query</figcaption></figure>'
   },
   {
-    id:'placeholder-ml-1', theme:'dark', categoryTags:['Machine Learning'],
-    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png',
-    thumbAlt:'Certificate proven',
-    kicker:'Completed project', title:'Submission Project Prediction Bank Customer Churn MLOPS Project',
-    cardBlurb:'A deep learning-based solution to predict bank customer churn using demographic, behavioral, and customer interaction data. The project applies a TFX MLOps pipeline for data validation, transformation, model training, evaluation, and deployment.',
-    problem: 'Banks need to identify customers who are likely to churn so they can take proactive retention actions. This project addresses the problem by predicting customer churn based on demographic, behavioral, and interaction-related features.',
-    approach: 'Built a binary classification model using a deep neural network with categorical and numerical features, using TensorFlow and a TFX pipeline covering ExampleGen, StatisticsGen, SchemaGen, ExampleValidator, Transform, Trainer, Evaluator, and Pusher. The model achieved 100% binary accuracy on the training and validation data and was deployed as a model-serving API on Railway with monitoring through Prometheus metrics.',
-    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://github.com/mfznakbr/Prediction-Bank-Customer-Churn--MLOPS-Project-" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+    id:'bank-churn-mlops', theme:'dark', categoryTags:['Machine Learning'], link:'', linkLabel:'',
+    kicker:'Independent project · Completed',
+    title:'Bank Customer Churn Prediction — MLOps Pipeline',
+    cardBlurb:'A deep learning model that predicts bank customer churn from demographic, behavioral, and interaction data, built on a full TFX MLOps pipeline from validation through deployment.',
+    problem: 'Banks need to identify customers who are likely to churn so they can act on retention before it\'s too late. This project predicts churn from demographic, behavioral, and interaction-related features.',
+    approach: 'Built a binary classification model — a deep neural network over categorical and numerical features — inside a TFX pipeline covering ExampleGen, StatisticsGen, SchemaGen, ExampleValidator, Transform, Trainer, Evaluator, and Pusher. The model reached 100% binary accuracy on training and validation data and was deployed as a model-serving API on Railway, with monitoring through Prometheus metrics.',
+    extrasHtml:'', tagsHtml:'<span class="tag">TensorFlow</span><span class="tag">TFX</span><span class="tag">MLOps</span><span class="tag">Railway</span>',
+    mediaHtml:'<figure class="media media--dark"><a class="frame" href="https://github.com/mfznakbr/Prediction-Bank-Customer-Churn--MLOPS-Project-" target="_blank" rel="noopener"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg><span class="placeholder__label">View repository on GitHub</span></div></a><figcaption><b>Fig. 1</b> — Source code &amp; full write-up</figcaption></figure>'
   },
   {
-    id:'placeholder-ml-2', theme:'dark', categoryTags:['Machine Learning'],
-    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png',
-    thumbAlt:'Certificate proven',
-    kicker:'completed project', title:'Submission Project Recomendation Song System Using Machine Learning',
-    cardBlurb: 'A content-based music recommendation system that helps users discover songs with characteristics similar to their preferences. The system uses audio features such as duration, danceability, and valence to identify and recommend similar songs.',
-    problem: 'Users often struggle to quickly find songs that match their preferences and mood due to the large volume of music available online. This project addresses the problem by developing a content-based recommendation system that recommends songs based on the similarity of their audio characteristics.',
-    approach: 'Built a content-based filtering system using duration, danceability, and valence as the main audio features. The features were normalized using MinMaxScaler, and Cosine Similarity was used to calculate similarity between songs and generate Top-K recommendations; for example, the system generated five similar songs for “Boyfriend”.',
-    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://github.com/mfznakbr/Recomendation_Systems-Machinelearning_Spotify" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+    id:'song-recommendation', theme:'dark', categoryTags:['Machine Learning'], link:'', linkLabel:'',
+    kicker:'Independent project · Completed',
+    title:'Content-Based Music Recommendation System',
+    cardBlurb:'A content-based recommender that suggests similar songs using audio features — duration, danceability, and valence — compared with cosine similarity.',
+    problem: 'With so much music available, it\'s hard for listeners to quickly find songs that match their taste. This project recommends songs based on how similar their audio characteristics are to a chosen track.',
+    approach: 'Normalized duration, danceability, and valence with MinMaxScaler, then used cosine similarity between songs to generate Top-K recommendations — for example, five similar songs for the track "Boyfriend."',
+    extrasHtml:'', tagsHtml:'<span class="tag">Python</span><span class="tag">Content-Based Filtering</span><span class="tag">Cosine Similarity</span>',
+    mediaHtml:'<figure class="media media--dark"><a class="frame" href="https://github.com/mfznakbr/Recomendation_Systems-Machinelearning_Spotify" target="_blank" rel="noopener"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg><span class="placeholder__label">View repository on GitHub</span></div></a><figcaption><b>Fig. 1</b> — Source code &amp; full write-up</figcaption></figure>'
   },
   {
-    id:'placeholder-ml-3', theme:'light', categoryTags:['Machine Learning'], isPlaceholder:true,
-    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png',
-    thumbAlt:'Certificate proven',
-    kicker:'completed project', title:'Submission Processing Data ETL Pipeline',
-    cardBlurb: 'A modular ETL pipeline built with Python to extract, clean, transform, and store competitor fashion product data from the Fashion Studio website. The project applies data quality checks, currency conversion, modular programming, and unit testing to produce analysis-ready data.',
-    problem: 'Raw product data collected from a website may contain duplicates, null values, invalid records, and inconsistent information, making it unsuitable for direct analysis. This project addresses the problem by building an automated ETL pipeline that extracts product data and transforms it into a cleaner and more consistent dataset.',
-    approach: 'Built a modular Python ETL pipeline consisting of Extract, Transform, and Load stages. Product data was collected through web scraping, cleaned by removing duplicates, null values, and invalid records such as “Unknown Product”, and converted from USD to Indonesian Rupiah using an assumed exchange rate of 1 USD = Rp16,000; unit testing was also implemented to validate the ETL functions.',
-    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://github.com/mfznakbr/ETL-Pipeline---Fashion-Studio" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+    id:'fashion-etl-pipeline', theme:'light', categoryTags:['Data Analyst'], link:'', linkLabel:'',
+    kicker:'Independent project · Completed',
+    title:'Fashion Product Data ETL Pipeline',
+    cardBlurb:'A modular Python ETL pipeline that extracts, cleans, and transforms competitor fashion product data scraped from the Fashion Studio website into analysis-ready data.',
+    problem: 'Product data scraped from a website tends to have duplicates, nulls, invalid records, and inconsistent formatting — not something you can analyze directly. This pipeline turns that raw scrape into a clean, consistent dataset.',
+    approach: 'Built a modular Extract–Transform–Load pipeline: scraped the product data, removed duplicates, null values, and invalid records such as "Unknown Product," converted prices from USD to IDR at a fixed rate of Rp16,000/USD, and covered the ETL functions with unit tests.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Python</span><span class="tag">Web Scraping</span><span class="tag">ETL</span><span class="tag">Unit Testing</span>',
+    mediaHtml:'<figure class="media"><a class="frame" href="https://github.com/mfznakbr/ETL-Pipeline---Fashion-Studio" target="_blank" rel="noopener"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg><span class="placeholder__label">View repository on GitHub</span></div></a><figcaption><b>Fig. 1</b> — Source code &amp; full write-up</figcaption></figure>'
   },
   {
-    id:'placeholder-ml-4', theme:'dark', categoryTags:['Machine Learning', 'Data Analysis'], isPlaceholder:true,
-    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png',
-    thumbAlt:'Certificate proven',
-    kicker:'Upcoming project', title:'Submission Project Sentiment Analysis',
-    cardBlurb: 'An Indonesian sentiment analysis project for identifying user opinions about the Identitas Kependudukan Digital (IKD) application. The project applies Indonesian text preprocessing, TF-IDF feature extraction, and machine learning classification to distinguish positive and negative reviews.',
-    problem: 'Users leave large numbers of reviews about the IKD application, making it difficult to manually identify overall user perceptions and recurring dissatisfaction. This project addresses the problem by automatically classifying Google Play Store reviews into positive and negative sentiment categories.',
-    approach: 'Processed 7,000 Google Play Store reviews and obtained 5,902 usable reviews after data cleaning. Applied Indonesian text preprocessing with Sastrawi, TF-IDF with unigram and bigram features, and compared Multinomial Naive Bayes, Random Forest, Logistic Regression, and Decision Tree; Logistic Regression was selected as the preferred model because it provided a better balance between positive and negative sentiment detection, particularly achieving 0.69 recall for the minority positive class.',
-    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://github.com/mfznakbr/NLP-Analisis-Sentimen-Aplikasi-Identitas-Kependudukan-Digital" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+    id:'ikd-sentiment-analysis', theme:'dark', categoryTags:['Machine Learning', 'Data Analyst'], link:'', linkLabel:'',
+    kicker:'Independent project · Completed',
+    title:'Sentiment Analysis — Identitas Kependudukan Digital (IKD) Reviews',
+    cardBlurb:'An Indonesian-language sentiment classifier for Google Play Store reviews of the IKD app, comparing four models to separate positive from negative feedback.',
+    problem: 'The IKD app collects a large volume of user reviews, making it hard to manually track overall sentiment and recurring complaints. This project automatically classifies reviews as positive or negative.',
+    approach: 'Processed 7,000 Google Play Store reviews down to 5,902 usable reviews after cleaning, then applied Indonesian text preprocessing with Sastrawi and TF-IDF (unigram + bigram) features. Compared Multinomial Naive Bayes, Random Forest, Logistic Regression, and Decision Tree; Logistic Regression was chosen for its better balance between classes, notably 0.69 recall on the minority positive class.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Sastrawi</span><span class="tag">TF-IDF</span><span class="tag">Logistic Regression</span>',
+    mediaHtml:'<figure class="media media--dark"><a class="frame" href="https://github.com/mfznakbr/NLP-Analisis-Sentimen-Aplikasi-Identitas-Kependudukan-Digital" target="_blank" rel="noopener"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg><span class="placeholder__label">View repository on GitHub</span></div></a><figcaption><b>Fig. 1</b> — Source code &amp; full write-up</figcaption></figure>'
   },
   {
-    id:'placeholder-etl', theme:'light', categoryTags:['Machine Learning'], isPlaceholder:true,
-    thumb:'https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png',
-    thumbAlt:'Certificate proven',
-    kicker:'Completed project', title:'Submission Project Predicting Daily Retail Sales',
-    cardBlurb: 'A machine learning project for predicting daily retail sales using historical store, promotion, and competition data. The project compares Random Forest and XGBoost regressors, with XGBoost selected for its stronger generalization and more stable performance on unseen data.',
-    problem: 'Accurately forecasting daily retail sales is important for inventory management, staffing, and promotional planning. This project addresses the challenge of predicting daily store sales by leveraging historical sales data together with store characteristics, promotions, and competitor information.',
-    approach: 'Merged Rossmann sales and store datasets, handled missing values and outliers, engineered time and promotion-related features, applied one-hot encoding and MinMaxScaler, and split the data into training and test sets. Random Forest Regressor and XGBoost Regressor were trained and evaluated using MSE, MAE, and R²; XGBoost achieved the better test performance with an R² of 0.7812, compared with 0.7199 for Random Forest, and was selected as the more stable model.',
-    extrasHtml:'', tagsHtml:'<span class="tag">Machine Learning</span>',
-    mediaHtml:'<figure class="media media--dark"><a class="frame has-image" href="https://github.com/mfznakbr/Submission-Predictive-Sales-Prediction-" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/dashboard%20a%20phase.png" alt="Control chart (Python)" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg><span class="placeholder__label">UPLOAD: Control chart (Python)</span></div></a><figcaption><b>Fig. 1</b> — Control chart</figcaption></figure>'
-      +'<figure class="media media--dark"><a class="frame has-image" href="PASTE-LINK-PROJECT4-FIG2-PROJECT-CHARTER" target="_blank" rel="noopener"><img src="https://raw.githubusercontent.com/mfznakbr/fauzan-portofolio/main/image_project/sql%20code.png" alt="SQL Server query" loading="lazy" onerror="this.closest(\'.frame\').classList.remove(\'has-image\')"><div class="placeholder placeholder--dark"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="placeholder__label">UPLOAD: DMAIC project charter</span></div></a><figcaption><b>Fig. 2</b> — Project charter</figcaption></figure>'
+    id:'retail-sales-forecast', theme:'light', categoryTags:['Machine Learning'], link:'', linkLabel:'',
+    kicker:'Independent project · Completed',
+    title:'Daily Retail Sales Forecasting',
+    cardBlurb:'A regression model forecasting daily retail sales from historical store, promotion, and competition data, comparing Random Forest against XGBoost.',
+    problem: 'Forecasting daily sales accurately matters for inventory, staffing, and promotion planning. This project predicts daily store sales from historical sales data plus store, promotion, and competitor information.',
+    approach: 'Merged the Rossmann sales and store datasets, handled missing values and outliers, engineered time and promotion features, and applied one-hot encoding with MinMaxScaler. Random Forest and XGBoost regressors were trained and compared on MSE, MAE, and R²; XGBoost generalized better, reaching an R² of 0.7812 versus 0.7199 for Random Forest, and was selected as the more stable model.',
+    extrasHtml:'', tagsHtml:'<span class="tag">Python</span><span class="tag">Random Forest</span><span class="tag">XGBoost</span><span class="tag">Regression</span>',
+    mediaHtml:'<figure class="media"><a class="frame" href="https://github.com/mfznakbr/Submission-Predictive-Sales-Prediction-" target="_blank" rel="noopener"><div class="placeholder"><svg class="placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m9 18-6-6 6-6M15 6l6 6-6 6"/></svg><span class="placeholder__label">View repository on GitHub</span></div></a><figcaption><b>Fig. 1</b> — Source code &amp; full write-up</figcaption></figure>'
   }
 ];
 
@@ -1100,6 +1113,7 @@ var WORK_PROJECTS = [
     modalContent.innerHTML =
       '<div class="project__kicker"><p class="eyebrow">'+p.kicker+'</p></div>'
       + '<h3 class="h-display project__title" style="font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:var(--s3)">'+p.title+'</h3>'
+      + (p.link ? '<a class="project__link-btn btn btn--solid" href="'+p.link+'" target="_blank" rel="noopener">'+(p.linkLabel || 'View full project')+' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M9 7h8v8"/></svg></a>' : '')
       + '<p class="project__block-label">Problem</p>'
       + '<p class="project__text">'+p.problem+'</p>'
       + '<p class="project__block-label">Approach</p>'
