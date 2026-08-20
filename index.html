@@ -1084,26 +1084,31 @@ var WORK_PROJECTS = [
   /* drag-to-scroll for desktop (native touch scroll already works on mobile) */
   (function(){
     var isDown = false, startX = 0, startScroll = 0, moved = 0;
-    rail.addEventListener('pointerdown', function(e){
-      if(e.pointerType === 'touch') return;
-      isDown = true; moved = 0; rail.classList.add('is-dragging');
-      startX = e.clientX; startScroll = rail.scrollLeft;
-      rail.setPointerCapture(e.pointerId);
-    });
-    rail.addEventListener('pointermove', function(e){
+    var DRAG_THRESHOLD = 6;
+
+    function onMove(e){
       if(!isDown) return;
       var dx = e.clientX - startX;
       moved = Math.max(moved, Math.abs(dx));
+      if(moved > DRAG_THRESHOLD) rail.classList.add('is-dragging');
       rail.scrollLeft = startScroll - dx;
-    });
+    }
     function endDrag(){
       if(!isDown) return;
-      isDown = false; rail.classList.remove('is-dragging');
-      rail.dataset.dragged = moved > 6 ? '1' : '0';
+      isDown = false;
+      rail.classList.remove('is-dragging');
+      rail.dataset.dragged = moved > DRAG_THRESHOLD ? '1' : '0';
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', endDrag);
       setTimeout(function(){ rail.dataset.dragged = '0'; }, 50);
     }
-    rail.addEventListener('pointerup', endDrag);
-    rail.addEventListener('pointerleave', endDrag);
+    rail.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'touch') return;
+      isDown = true; moved = 0;
+      startX = e.clientX; startScroll = rail.scrollLeft;
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', endDrag);
+    });
   })();
 
   /* modal */
